@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Shirt Co. — Marketing Fabrication & Fulfillment</title>
+  <meta name="description" content="BSC is a lean marketing fabrication and fulfillment company. From design adaptation to delivery, we make your brand show up everywhere." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0C0908;
+      --ivory: #FFF9E7;
+      --lime: #DDFF63;
+      --punch: #FF4644;
+      --coral: #FF7573;
+      --lavender: #BEB4F0;
+      --salamander: #334133;
+      --white: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .display {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5%;
+      background: var(--black);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--lime); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--lime); }
+
+    .nav-cta {
+      background: var(--lime);
+      color: var(--black);
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: #c8f040; }
+
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; transition: 0.3s; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 5% 6rem;
+      padding-top: 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tape {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--lime) 0px, var(--lime) 32px,
+        var(--black) 32px, var(--black) 36px
+      );
+    }
+
+    .hero-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline {
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      color: var(--white);
+      max-width: 900px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--lime);
+      display: block;
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 520px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--lime);
+      color: var(--black);
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: #c8f040; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--white); border-color: var(--white); }
+
+    .hero-clients {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-clients p {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .client-tags {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .client-tag {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* SECTION SHARED */
+    section { padding: 6rem 5%; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1rem;
+    }
+
+    .section-headline {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES */
+    #services { background: var(--black); }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .service-card {
+      background: var(--black);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .service-card:hover { background: #161311; }
+
+    .service-card:hover .service-number { color: var(--lime); }
+
+    .service-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: rgba(255,255,255,0.08);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--lime);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-icon svg { width: 20px; height: 20px; }
+
+    .service-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+      color: var(--white);
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+    }
+
+    /* PROCESS */
+    #process { background: var(--ivory); color: var(--black); }
+
+    #process .section-label { color: var(--salamander); }
+    #process .section-headline { color: var(--black); }
+    #process .section-sub { color: rgba(0,0,0,0.55); }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .process-step {
+      position: relative;
+      padding-top: 1.5rem;
+      border-top: 3px solid var(--black);
+    }
+
+    .process-step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      color: rgba(0,0,0,0.3);
+      margin-bottom: 1rem;
+    }
+
+    .process-step h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+      color: var(--black);
+      margin-bottom: 0.75rem;
+    }
+
+    .process-step p {
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.6);
+      line-height: 1.65;
+    }
+
+    /* WORK */
+    #work { background: var(--black); }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    .work-item {
+      background: #1a1816;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .work-item:nth-child(1) { grid-column: span 8; }
+    .work-item:nth-child(2) { grid-column: span 4; }
+    .work-item:nth-child(3) { grid-column: span 4; }
+    .work-item:nth-child(4) { grid-column: span 8; }
+
+    .work-placeholder {
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .work-item:nth-child(2) .work-placeholder,
+    .work-item:nth-child(3) .work-placeholder { aspect-ratio: 4/5; }
+
+    .work-placeholder svg { width: 32px; height: 32px; opacity: 0.3; }
+
+    .work-label {
+      position: absolute;
+      bottom: 1rem; left: 1rem;
+      background: var(--lime);
+      color: var(--black);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    /* ABOUT */
+    #about { background: var(--salamander); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-values {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .value-dot {
+      width: 8px; height: 8px;
+      background: var(--lime);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .about-right {
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      padding: 3rem;
+    }
+
+    .about-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: var(--white);
+    }
+
+    .about-quote em {
+      font-style: normal;
+      color: var(--lime);
+    }
+
+    .about-quote-sub {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--black); text-align: center; }
+
+    .contact-inner { max-width: 700px; margin: 0 auto; }
+
+    .contact-headline {
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-headline em {
+      font-style: normal;
+      color: var(--lime);
+      display: block;
+    }
+
+    .contact-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 3rem;
+    }
+
+    .contact-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--lime);
+      color: var(--black);
+      padding: 1.1rem 2.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .contact-wa:hover { background: #c8f040; transform: translateY(-2px); }
+
+    .contact-wa svg { width: 22px; height: 22px; }
+
+    .contact-email {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .contact-email a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .contact-email a:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-tape {
+      width: 100%;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--lime) 0px, var(--lime) 32px,
+        var(--black) 32px, var(--black) 36px
+      );
+      margin-bottom: 1.5rem;
+    }
+
+    /* MOBILE NAV */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .mobile-menu a:hover { color: var(--lime); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .work-item:nth-child(1) { grid-column: span 12; }
+      .work-item:nth-child(2) { grid-column: span 6; }
+      .work-item:nth-child(3) { grid-column: span 6; }
+      .work-item:nth-child(4) { grid-column: span 12; }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 4rem 5%; }
+
+      .work-item:nth-child(1),
+      .work-item:nth-child(2),
+      .work-item:nth-child(3),
+      .work-item:nth-child(4) { grid-column: span 12; }
+
+      .work-item:nth-child(2) .work-placeholder,
+      .work-item:nth-child(3) .work-placeholder { aspect-ratio: 16/9; }
+
+      .services-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">BSC<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="nav-cta" target="_blank" rel="noopener">Get in Touch</a>
+    <div class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#process" class="mobile-link">Process</a>
+    <a href="#work" class="mobile-link">Work</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" rel="noopener">Talk to Us</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-tape"></div>
+    <p class="hero-label">Black Shirt Co. — Marketing Fabrication & Fulfillment</p>
+    <h1 class="hero-headline">
+      From Ideas
+      <em>To Impactful</em>
+      Realities.
+    </h1>
+    <p class="hero-sub">We handle design adaptation, sourcing, fabrication, and delivery — so your brand shows up everywhere, exactly as imagined.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Let's Talk
+      </a>
+      <a href="#services" class="btn-secondary">See What We Do →</a>
+    </div>
+    <div class="hero-clients">
+      <p>Trusted by</p>
+      <div class="client-tags">
+        <span class="client-tag">Multi-Outlet Brands</span>
+        <span class="client-tag">Creative Agencies</span>
+        <span class="client-tag">F&B Groups</span>
+        <span class="client-tag">Events Teams</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header">
+      <div>
+        <p class="section-label">What We Do</p>
+        <h2 class="section-headline">End-to-End.<br>No Gaps.</h2>
+      </div>
+      <p class="section-sub">One point of contact. We handle every step from design to doorstep — so your team can focus on what matters.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-number">01</div>
+        <h3>Design Adaptation</h3>
+        <p>We take your brand assets and adapt them for any format, medium, or market — on-brand, every time.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">02</div>
+        <h3>Sourcing & Procurement</h3>
+        <p>We tap our trusted vendor network to find the right materials at the right price, without the runaround.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">03</div>
+        <h3>Fabrication</h3>
+        <p>From concept to physical product — signage, POS displays, merchandise, activations — produced and quality-checked.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">04</div>
+        <h3>Delivery & Fulfillment</h3>
+        <p>Multi-outlet distribution, handled. We coordinate logistics so your materials arrive on time, at the right place.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-headline" style="color:var(--black)">Simple Process.<br>Impactful Results.</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <p class="process-step-num">Step 01</p>
+        <h3>Brief</h3>
+        <p>Tell us what you need — campaign, format, quantity, deadline. We listen, ask the right questions, and lock in scope.</p>
+      </div>
+      <div class="process-step">
+        <p class="process-step-num">Step 02</p>
+        <h3>Source</h3>
+        <p>We tap our vendor network to find the best fit for your brief — balancing quality, cost, and turnaround time.</p>
+      </div>
+      <div class="process-step">
+        <p class="process-step-num">Step 03</p>
+        <h3>Produce</h3>
+        <p>Fabrication is handled end-to-end. We manage production, oversee quality, and keep you updated throughout.</p>
+      </div>
+      <div class="process-step">
+        <p class="process-step-num">Step 04</p>
+        <h3>Deliver</h3>
+        <p>Your materials, at your outlets, on time. Single location or multi-site — we coordinate everything.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="work-header">
+      <div>
+        <p class="section-label">Our Work</p>
+        <h2 class="section-headline">Made by BSC.</h2>
+      </div>
+      <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="btn-secondary" target="_blank" rel="noopener">Start a Project →</a>
+    </div>
+    <div class="work-grid">
+      <div class="work-item">
+        <div class="work-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Photo coming soon
+        </div>
+        <span class="work-label">POS Display</span>
+      </div>
+      <div class="work-item">
+        <div class="work-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Photo coming soon
+        </div>
+        <span class="work-label">Brand Activation</span>
+      </div>
+      <div class="work-item">
+        <div class="work-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Photo coming soon
+        </div>
+        <span class="work-label">Signage</span>
+      </div>
+      <div class="work-item">
+        <div class="work-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Photo coming soon
+        </div>
+        <span class="work-label">Merchandise</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div>
+        <p class="section-label">About BSC</p>
+        <h2 class="section-headline">Not Just A Vendor.</h2>
+        <p class="section-sub">BSC is a lean marketing fabrication and fulfillment company. We don't just take orders — we embed ourselves in your campaign and see it through from brief to delivery.</p>
+        <div class="about-values">
+          <div class="value-item"><span class="value-dot"></span>Collaborative Creativity</div>
+          <div class="value-item"><span class="value-dot"></span>Exemplary Craftsmanship</div>
+          <div class="value-item"><span class="value-dot"></span>Consistent Reliability</div>
+        </div>
+      </div>
+      <div class="about-right">
+        <p class="about-quote">
+          We are <em>proficient,</em> but not reckless. Competent, but not complacent. Accomplished, but <em>never</em> boastful.
+        </p>
+        <p class="about-quote-sub">We're a creative ally invested in every project — not a transactional vendor you call once and forget.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="contact-headline">
+        Let's Build
+        <em>Something.</em>
+      </h2>
+      <p class="contact-sub">Got a campaign to launch? Materials to produce? Tell us what you need — we'll take it from there.</p>
+      <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="contact-wa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Message us on WhatsApp
+      </a>
+      <p class="contact-email">Or email us at <a href="mailto:hello@wearebsc.com">hello@wearebsc.com</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-tape"></div>
+    <a href="#hero" class="footer-logo">BLACK SHIRT CO.</a>
+    <p class="footer-copy">© 2026 Black Shirt Co. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link, .mobile-menu a');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
