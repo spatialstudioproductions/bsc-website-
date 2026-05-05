@@ -728,6 +728,30 @@
       .pullquote-section { padding: 6rem 5%; }
       .process-row { grid-template-columns: 1fr; gap: 1rem; }
     }
+
+    /* HERO ENTRANCE */
+    .hero-label { animation: heroFadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both; }
+    .hero-headline { animation: heroFadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both; }
+    .hero-sub { animation: heroFadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.75s both; }
+    .hero-cta { animation: heroFadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s both; }
+    .hero-scroll { animation: heroFadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both; }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SCROLL ANIMATIONS */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-animate].in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -780,26 +804,26 @@
   <!-- SERVICES -->
   <section id="services">
     <div class="services-top">
-      <div>
+      <div data-animate>
         <span class="section-label">What We Do</span>
         <h2 class="section-headline">Create.<br>Make.<br>Deliver.</h2>
       </div>
-      <p class="services-intro">Every project runs through the same three hands. No handoffs to strangers, no broken chains — one team from brief to delivery.</p>
+      <p class="services-intro" data-animate data-delay="120">Every project runs through the same three hands. No handoffs to strangers, no broken chains — one team from brief to delivery.</p>
     </div>
     <div class="services-list">
-      <div class="service-row">
+      <div class="service-row" data-animate data-delay="0">
         <span class="service-row-num">01</span>
         <h3 class="service-row-name">Creative Execution</h3>
         <p class="service-row-desc">Original concepts or brand adaptation — we handle the creative so everything that gets made is built on the right foundation.</p>
         <span class="service-row-arrow">→</span>
       </div>
-      <div class="service-row">
+      <div class="service-row" data-animate data-delay="100">
         <span class="service-row-num">02</span>
         <h3 class="service-row-name">Fabrication</h3>
         <p class="service-row-desc">Built in-house where we can, sourced where we should — fast, cost-efficient, and quality-checked before anything leaves.</p>
         <span class="service-row-arrow">→</span>
       </div>
-      <div class="service-row">
+      <div class="service-row" data-animate data-delay="200">
         <span class="service-row-num">03</span>
         <h3 class="service-row-name">Delivery & Fulfillment</h3>
         <p class="service-row-desc">Single site or multi-outlet, we coordinate the last mile. On time, at the right place, every time.</p>
@@ -809,31 +833,31 @@
   </section>
 
   <!-- FULL BLEED IMAGE -->
-  <div class="full-bleed">
+  <div class="full-bleed" data-animate>
     <span>Campaign Image Placeholder</span>
   </div>
 
   <!-- PROCESS -->
   <section id="process">
     <div class="process-header">
-      <div>
+      <div data-animate>
         <span class="section-label">How It Works</span>
         <h2 class="section-headline" style="color:var(--black)">Simple In.<br>Solid Out.</h2>
       </div>
-      <p class="process-sub">Hand us the brief. One point of contact from start to finish — no runaround, no chasing for updates.</p>
+      <p class="process-sub" data-animate data-delay="120">Hand us the brief. One point of contact from start to finish — no runaround, no chasing for updates.</p>
     </div>
     <div class="process-list">
-      <div class="process-row">
+      <div class="process-row" data-animate data-delay="0">
         <span class="process-row-num">01</span>
         <h3 class="process-row-title">One Brief</h3>
         <p class="process-row-desc">You tell us once. Campaign details, specs, quantities, deadline — we ask the right questions upfront, lock it in, and own it from there. No need to repeat yourself.</p>
       </div>
-      <div class="process-row">
+      <div class="process-row" data-animate data-delay="100">
         <span class="process-row-num">02</span>
         <h3 class="process-row-title">One Point of Contact</h3>
         <p class="process-row-desc">Design, production, logistics — all under one roof. You deal with us, not a chain of vendors.</p>
       </div>
-      <div class="process-row">
+      <div class="process-row" data-animate data-delay="200">
         <span class="process-row-num">03</span>
         <h3 class="process-row-title">One Delivery</h3>
         <p class="process-row-desc">Everything lands where it needs to, when it needs to. Exactly as discussed, no last-minute surprises, no chasing for updates.</p>
@@ -843,7 +867,7 @@
 
   <!-- WORK -->
   <section id="work">
-    <div class="work-header">
+    <div class="work-header" data-animate>
       <div>
         <span class="section-label">Our Work</span>
         <h2 class="section-headline">Made by BSC.</h2>
@@ -851,19 +875,19 @@
       <a href="https://wa.me/6597313243" class="work-link" target="_blank" rel="noopener">Start a Project →</a>
     </div>
     <div class="work-grid">
-      <div class="work-item">
+      <div class="work-item" data-animate data-delay="0">
         <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889117/Test_1_pzudec.jpg" alt="POS Display" />
         <span class="work-item-label">POS Display</span>
       </div>
-      <div class="work-item">
+      <div class="work-item" data-animate data-delay="100">
         <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889106/test_2_tsmaw0.jpg" alt="Brand Activation" />
         <span class="work-item-label">Brand Activation</span>
       </div>
-      <div class="work-item">
+      <div class="work-item" data-animate data-delay="150">
         <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889248/Test_1.2_budooa.jpg" alt="Signage" />
         <span class="work-item-label">Signage</span>
       </div>
-      <div class="work-item">
+      <div class="work-item" data-animate data-delay="250">
         <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889568/test_2.1_d6kuma.jpg" alt="Merchandise" />
         <span class="work-item-label">Merchandise</span>
       </div>
@@ -873,14 +897,14 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="about-split">
-      <div class="about-img">
+      <div class="about-img" data-animate>
         <span>Brand Image Placeholder</span>
       </div>
       <div class="about-content">
-        <span class="section-label">About BSC</span>
-        <h2 class="about-headline">Your Needs.<br>Our<br>Responsibility.</h2>
-        <p class="about-body">We built BSC around one conviction: that great campaigns deserve partners who are fully invested in seeing them land. We don't just take orders — we embed ourselves in your campaign and see it through from brief to delivery.</p>
-        <div class="about-values">
+        <span class="section-label" data-animate>About BSC</span>
+        <h2 class="about-headline" data-animate data-delay="80">Your Needs.<br>Our<br>Responsibility.</h2>
+        <p class="about-body" data-animate data-delay="160">We built BSC around one conviction: that great campaigns deserve partners who are fully invested in seeing them land. We don't just take orders — we embed ourselves in your campaign and see it through from brief to delivery.</p>
+        <div class="about-values" data-animate data-delay="240">
           <div class="value-item"><span class="value-dot"></span>Tight briefs, tighter execution</div>
           <div class="value-item"><span class="value-dot"></span>Built right, not rushed</div>
           <div class="value-item"><span class="value-dot"></span>In it from start to finish</div>
@@ -891,19 +915,19 @@
 
   <!-- PULLQUOTE -->
   <div class="pullquote-section">
-    <p class="pullquote">Every outlet. Every deadline. <em>Every time.</em></p>
-    <p class="pullquote-sub">BSC exists to be the team behind your team — reliable, invested, and always on.</p>
+    <p class="pullquote" data-animate>Every outlet. Every deadline. <em>Every time.</em></p>
+    <p class="pullquote-sub" data-animate data-delay="120">BSC exists to be the team behind your team — reliable, invested, and always on.</p>
   </div>
 
   <!-- CONTACT -->
   <section id="contact">
-    <span class="section-label contact-label">Get In Touch</span>
-    <h2 class="contact-headline">
+    <span class="section-label contact-label" data-animate>Get In Touch</span>
+    <h2 class="contact-headline" data-animate data-delay="80">
       Ready When
       <em>You Are.</em>
     </h2>
-    <p class="contact-sub">Brief in hand or just an idea — drop us a message and we'll take it from there.</p>
-    <a href="https://wa.me/6597313243" class="contact-wa" target="_blank" rel="noopener">
+    <p class="contact-sub" data-animate data-delay="180">Brief in hand or just an idea — drop us a message and we'll take it from there.</p>
+    <a href="https://wa.me/6597313243" class="contact-wa" data-animate data-delay="280" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
       Message us on WhatsApp
     </a>
@@ -921,6 +945,19 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 80);
     });
+
+    // Scroll animations
+    const animatedEls = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.delay || 0);
+          setTimeout(() => entry.target.classList.add('in-view'), delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    animatedEls.forEach(el => observer.observe(el));
 
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
