@@ -7,22 +7,19 @@
   <meta name="description" content="BSC is a lean marketing fabrication and fulfillment company. From design adaptation to delivery, we make your brand show up everywhere." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --black: #1C1108;
       --ivory: #FFF9E7;
-      --lime: #DDFF63;
-      --punch: #FF4644;
-      --coral: #FF7573;
+      --stone: #C4BBAA;
+      --stone-hover: #a8a093;
       --lavender: #BEB4F0;
       --salamander: #334133;
-      --stone: #C4BBAA;
       --white: #FFFFFF;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -32,7 +29,7 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3, .display {
+    h1, h2, h3 {
       font-family: 'Bebas Neue', sans-serif;
       letter-spacing: 0.02em;
     }
@@ -45,15 +42,21 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 5%;
+      padding: 2rem 5%;
+      transition: background 0.4s, padding 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
       background: var(--black);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1.25rem 5%;
+      border-bottom-color: rgba(255,255,255,0.06);
     }
 
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: 0.08em;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
       color: var(--white);
       text-decoration: none;
     }
@@ -62,78 +65,93 @@
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
-      color: rgba(255,255,255,0.65);
+      color: rgba(255,255,255,0.5);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--stone); }
+    .nav-links a:hover { color: var(--white); }
 
     .nav-cta {
-      background: var(--stone);
-      color: var(--black);
-      padding: 0.6rem 1.4rem;
-      border-radius: 2px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--stone);
       text-decoration: none;
-      transition: background 0.2s;
+      border-bottom: 1px solid var(--stone);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    .nav-cta:hover { background: #a8a093; }
+    .nav-cta:hover { color: var(--white); border-color: var(--white); }
 
     .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-    .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; transition: 0.3s; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; }
 
     /* HERO */
     #hero {
-      min-height: 100vh;
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       padding: 0 5% 6rem;
-      padding-top: 6rem;
-      position: relative;
       overflow: hidden;
     }
 
-    .hero-tape {
+    .hero-bg {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 6px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--stone) 0px, var(--stone) 32px,
-        var(--black) 32px, var(--black) 36px
-      );
+      inset: 0;
+      background: #2a1c0e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,17,8,0.95) 0%, rgba(28,17,8,0.45) 50%, rgba(28,17,8,0.2) 100%);
+    }
+
+    .hero-bg-label {
+      color: rgba(255,255,255,0.08);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
     .hero-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--stone);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .hero-headline {
-      font-size: clamp(4rem, 10vw, 9rem);
-      line-height: 0.92;
+      font-size: clamp(5rem, 13vw, 11rem);
+      line-height: 0.88;
       text-transform: uppercase;
       color: var(--white);
-      max-width: 900px;
     }
 
     .hero-headline em {
@@ -142,356 +160,425 @@
       display: block;
     }
 
-    .hero-sub {
-      margin-top: 2rem;
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.65);
-      max-width: 520px;
-      line-height: 1.65;
-      font-weight: 400;
-    }
-
-    .hero-actions {
-      margin-top: 2.5rem;
+    .hero-bottom {
+      margin-top: 3rem;
       display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--stone);
-      color: var(--black);
-      padding: 0.9rem 2rem;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .btn-primary:hover { background: #a8a093; transform: translateY(-1px); }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: rgba(255,255,255,0.65);
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.25);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .btn-secondary:hover { color: var(--white); border-color: var(--white); }
-
-    .hero-clients {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
+      align-items: flex-end;
+      justify-content: space-between;
       gap: 2rem;
       flex-wrap: wrap;
     }
 
-    .hero-clients p {
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+    .hero-sub {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 440px;
+      line-height: 1.8;
+      font-weight: 400;
     }
 
-    .client-tags {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .client-tag {
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 0.8rem;
       font-weight: 600;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 3px;
+      white-space: nowrap;
+      transition: border-color 0.2s;
+    }
+
+    .hero-cta:hover { border-color: var(--white); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      animation: scrollline 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollline {
+      0%, 100% { transform: scaleY(1); opacity: 0.3; }
+      50% { transform: scaleY(0.4); opacity: 0.9; }
     }
 
     /* SECTION SHARED */
-    section { padding: 6rem 5%; }
-
     .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--stone);
       margin-bottom: 1rem;
+      display: block;
     }
 
     .section-headline {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 0.95;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.92;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-sub {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.55);
-      max-width: 500px;
-      line-height: 1.7;
     }
 
     /* SERVICES */
-    #services { background: var(--black); }
+    #services {
+      background: var(--black);
+      padding: 8rem 5%;
+    }
 
-    .services-header {
+    .services-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      margin-bottom: 5rem;
+      gap: 3rem;
       flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 4rem;
     }
 
-    .services-grid {
+    .services-intro {
+      max-width: 360px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.85;
+    }
+
+    .services-list { border-top: 1px solid rgba(255,255,255,0.08); }
+
+    .service-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px;
-      background: rgba(255,255,255,0.08);
+      grid-template-columns: 70px 1fr 2fr 40px;
+      align-items: center;
+      gap: 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: opacity 0.2s;
     }
 
-    .service-card {
-      background: var(--black);
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
+    .service-row:hover .service-row-num { color: var(--stone); }
+    .service-row:hover .service-row-name { color: var(--stone); }
+    .service-row:hover .service-row-arrow { color: var(--stone); transform: translateX(5px); }
 
-    .service-card:hover { background: #161311; }
-
-    .service-card:hover .service-number { color: var(--stone); }
-
-    .service-number {
+    .service-row-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
-      color: rgba(255,255,255,0.08);
-      line-height: 1;
-      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.18);
       transition: color 0.3s;
     }
 
-    .service-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--stone);
-      border-radius: 2px;
+    .service-row-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      letter-spacing: 0.03em;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+
+    .service-row-desc {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.75;
+    }
+
+    .service-row-arrow {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.12);
+      transition: color 0.3s, transform 0.3s;
+      text-align: right;
+    }
+
+    /* FULL BLEED */
+    .full-bleed {
+      width: 100%;
+      aspect-ratio: 21/8;
+      background: #241810;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.25rem;
+      color: rgba(255,255,255,0.08);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+      position: relative;
     }
 
-    .service-icon svg { width: 20px; height: 20px; }
-
-    .service-card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.75rem;
-      color: var(--white);
-    }
-
-    .service-card p {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.65;
+    .full-bleed img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* PROCESS */
-    #process { background: var(--ivory); color: var(--black); }
+    #process {
+      background: var(--ivory);
+      color: var(--black);
+      padding: 8rem 5%;
+    }
 
-    #process .section-label { color: var(--salamander); }
-    #process .section-headline { color: var(--black); }
-    #process .section-sub { color: rgba(0,0,0,0.55); }
+    #process .section-label { color: rgba(0,0,0,0.35); }
 
-    .process-steps {
+    .process-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5rem;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .process-sub {
+      max-width: 320px;
+      font-size: 0.88rem;
+      color: rgba(0,0,0,0.45);
+      line-height: 1.85;
+    }
+
+    .process-list { border-top: 1px solid rgba(0,0,0,0.1); }
+
+    .process-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      margin-top: 3.5rem;
+      grid-template-columns: 110px 1fr 2fr;
+      gap: 3rem;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      align-items: start;
     }
 
-    .process-step {
-      position: relative;
-      padding-top: 1.5rem;
-      border-top: 3px solid var(--black);
-    }
-
-    .process-step-num {
+    .process-row-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 0.15em;
-      color: rgba(0,0,0,0.3);
-      margin-bottom: 1rem;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      color: rgba(0,0,0,0.1);
+      line-height: 1;
     }
 
-    .process-step h3 {
+    .process-row-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
       letter-spacing: 0.03em;
       color: var(--black);
-      margin-bottom: 0.75rem;
+      padding-top: 0.5rem;
     }
 
-    .process-step p {
-      font-size: 0.9rem;
-      color: rgba(0,0,0,0.6);
-      line-height: 1.65;
+    .process-row-desc {
+      font-size: 0.87rem;
+      color: rgba(0,0,0,0.5);
+      line-height: 1.8;
+      padding-top: 0.75rem;
     }
 
     /* WORK */
-    #work { background: var(--black); }
+    #work {
+      background: var(--black);
+      padding: 8rem 5%;
+    }
 
     .work-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
     }
+
+    .work-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .work-link:hover { color: var(--white); border-color: var(--white); }
 
     .work-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 1rem;
+      gap: 1.25rem;
     }
 
     .work-item {
-      background: #1a1816;
-      border-radius: 2px;
       overflow: hidden;
       position: relative;
+      background: #241810;
     }
 
-    .work-item:nth-child(1) { grid-column: span 8; }
-    .work-item:nth-child(2) { grid-column: span 4; }
-    .work-item:nth-child(3) { grid-column: span 8; }
-    .work-item:nth-child(4) { grid-column: span 4; }
+    .work-item:nth-child(1) { grid-column: span 7; }
+    .work-item:nth-child(2) { grid-column: span 5; }
+    .work-item:nth-child(3) { grid-column: span 5; }
+    .work-item:nth-child(4) { grid-column: span 7; }
 
-    .work-placeholder {
-      aspect-ratio: 16/9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: rgba(255,255,255,0.2);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4/3;
+      transition: transform 0.7s ease;
     }
 
-    .work-item:nth-child(2) .work-placeholder,
-    .work-item:nth-child(4) .work-placeholder { aspect-ratio: 4/5; }
+    .work-item:hover img { transform: scale(1.04); }
 
-    .work-placeholder svg { width: 32px; height: 32px; opacity: 0.3; }
-
-    .work-label {
+    .work-item-label {
       position: absolute;
-      bottom: 1rem; left: 1rem;
-      background: var(--stone);
-      color: var(--black);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.3rem 0.6rem;
-      border-radius: 2px;
+      color: rgba(255,255,255,0.7);
+      background: rgba(28,17,8,0.55);
+      backdrop-filter: blur(6px);
+      padding: 0.35rem 0.75rem;
     }
 
     /* ABOUT */
-    #about { background: var(--salamander); }
+    #about { background: var(--black); }
 
-    .about-inner {
+    .about-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      min-height: 90vh;
+    }
+
+    .about-img {
+      background: #2a1c0e;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.08);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+      position: relative;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .about-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .about-content {
+      padding: 8rem 7% 8rem 9%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-headline {
+      font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-body {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.88;
+      margin-bottom: 3rem;
     }
 
     .about-values {
-      margin-top: 2.5rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2rem;
     }
 
     .value-item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      gap: 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255,255,255,0.4);
     }
 
     .value-dot {
-      width: 8px; height: 8px;
+      width: 5px; height: 5px;
       background: var(--stone);
       border-radius: 50%;
       flex-shrink: 0;
     }
 
-    .about-right {
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      padding: 3rem;
+    /* PULLQUOTE */
+    .pullquote-section {
+      background: var(--ivory);
+      color: var(--black);
+      padding: 9rem 5%;
+      text-align: center;
     }
 
-    .about-quote {
+    .pullquote {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      line-height: 1.1;
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      line-height: 1.05;
       letter-spacing: 0.02em;
-      color: var(--white);
+      max-width: 860px;
+      margin: 0 auto 2rem;
     }
 
-    .about-quote em {
+    .pullquote em {
       font-style: normal;
-      color: var(--stone);
+      color: rgba(0,0,0,0.25);
     }
 
-    .about-quote-sub {
-      margin-top: 1.5rem;
+    .pullquote-sub {
       font-size: 0.9rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.65;
+      color: rgba(0,0,0,0.42);
+      line-height: 1.8;
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     /* CONTACT */
-    #contact { background: var(--black); text-align: center; }
+    #contact {
+      background: var(--black);
+      padding: 10rem 5%;
+      text-align: center;
+    }
 
-    .contact-inner { max-width: 700px; margin: 0 auto; }
+    .contact-label { color: var(--stone); margin-bottom: 1.5rem; }
 
     .contact-headline {
-      font-size: clamp(3rem, 8vw, 7rem);
-      line-height: 0.9;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.88;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .contact-headline em {
@@ -501,42 +588,46 @@
     }
 
     .contact-sub {
-      color: rgba(255,255,255,0.5);
-      font-size: 1rem;
-      line-height: 1.65;
-      margin-bottom: 3rem;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.8;
+      max-width: 380px;
+      margin: 0 auto 3.5rem;
     }
 
     .contact-wa {
       display: inline-flex;
       align-items: center;
       gap: 0.75rem;
-      background: var(--stone);
-      color: var(--black);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--white);
       padding: 1.1rem 2.5rem;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
-      border-radius: 2px;
-      transition: background 0.2s, transform 0.2s;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    .contact-wa:hover { background: #a8a093; transform: translateY(-2px); }
+    .contact-wa:hover {
+      border-color: var(--stone);
+      background: rgba(196,187,170,0.05);
+    }
 
-    .contact-wa svg { width: 22px; height: 22px; }
+    .contact-wa svg { width: 20px; height: 20px; }
 
     .contact-email {
       margin-top: 1.5rem;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.22);
     }
 
     .contact-email a {
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.38);
       text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      transition: color 0.2s;
     }
 
     .contact-email a:hover { color: var(--white); }
@@ -544,8 +635,8 @@
     /* FOOTER */
     footer {
       background: var(--black);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 2rem 5%;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 5%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -555,29 +646,18 @@
 
     .footer-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.4);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.2);
       text-decoration: none;
     }
 
     .footer-copy {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.25);
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.18);
     }
 
-    .footer-tape {
-      width: 100%;
-      height: 4px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--stone) 0px, var(--stone) 32px,
-        var(--black) 32px, var(--black) 36px
-      );
-      margin-bottom: 1.5rem;
-    }
-
-    /* MOBILE NAV */
+    /* MOBILE MENU */
     .mobile-menu {
       display: none;
       position: fixed;
@@ -594,7 +674,7 @@
 
     .mobile-menu a {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
+      font-size: 3.5rem;
       color: var(--white);
       text-decoration: none;
       letter-spacing: 0.05em;
@@ -603,38 +683,57 @@
     .mobile-menu a:hover { color: var(--stone); }
 
     /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .service-row {
+        grid-template-columns: 60px 1fr 1.5fr 30px;
+        gap: 2rem;
+      }
+    }
+
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-cta { display: none; }
       .hamburger { display: flex; }
 
-      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .service-row {
+        grid-template-columns: 50px 1fr;
+        gap: 1.5rem;
+        padding: 2rem 0;
+      }
+      .service-row-desc { grid-column: 1 / -1; padding-left: 0; }
+      .service-row-arrow { display: none; }
 
-      .work-item:nth-child(1) { grid-column: span 12; }
-      .work-item:nth-child(2) { grid-column: span 6; }
-      .work-item:nth-child(3) { grid-column: span 12; }
-      .work-item:nth-child(4) { grid-column: span 6; }
-    }
+      .process-header { flex-direction: column; }
+      .process-row {
+        grid-template-columns: 80px 1fr;
+        gap: 1.5rem;
+      }
+      .process-row-desc { grid-column: 1 / -1; padding-top: 0; }
 
-    @media (max-width: 600px) {
-      section { padding: 4rem 5%; }
+      .about-split { grid-template-columns: 1fr; }
+      .about-img { min-height: 50vw; }
+      .about-content { padding: 5rem 5%; }
 
       .work-item:nth-child(1),
       .work-item:nth-child(2),
       .work-item:nth-child(3),
       .work-item:nth-child(4) { grid-column: span 12; }
 
-      .work-item:nth-child(2) .work-placeholder,
-      .work-item:nth-child(4) .work-placeholder { aspect-ratio: 16/9; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .full-bleed { aspect-ratio: 16/9; }
+    }
 
-      .services-header { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 600px) {
+      #services, #process, #work, #contact { padding: 5rem 5%; }
+      .pullquote-section { padding: 6rem 5%; }
+      .process-row { grid-template-columns: 1fr; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav id="nav">
     <a href="#hero" class="nav-logo">BSC<span>.</span></a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
@@ -659,78 +758,85 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-tape"></div>
-    <p class="hero-label">Black Shirt Co. — Marketing Fabrication & Fulfillment</p>
-    <h1 class="hero-headline">
-      Your Brand,
-      <em>Built.</em>
-    </h1>
-    <p class="hero-sub">Black Shirt Co exists to close the gap between ideas and execution. We handle design adaptation, sourcing, fabrication, and delivery — one contact, zero gaps — so your brand shows up at every outlet, every activation, exactly as it should.</p>
-    <div class="hero-actions">
-      <a href="https://wa.me/6597313243" class="btn-primary" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        Let's Talk
-      </a>
-      <a href="#services" class="btn-secondary">See What We Do →</a>
+    <div class="hero-bg">
+      <span class="hero-bg-label">Hero Image Placeholder</span>
     </div>
-    <div class="hero-clients">
-      <p>Trusted by</p>
-      <div class="client-tags">
-        <span class="client-tag">Multi-Outlet Brands</span>
-        <span class="client-tag">Creative Agencies</span>
-        <span class="client-tag">F&B Groups</span>
-        <span class="client-tag">Events Teams</span>
+    <div class="hero-content">
+      <p class="hero-label">Black Shirt Co. — Marketing Fabrication & Fulfillment</p>
+      <h1 class="hero-headline">
+        Your Brand,
+        <em>Built.</em>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-sub">Black Shirt Co exists to close the gap between ideas and execution. We handle design adaptation, sourcing, fabrication, and delivery — one contact, zero gaps — so your brand shows up at every outlet, every activation, exactly as it should.</p>
+        <a href="https://wa.me/6597313243" class="hero-cta" target="_blank" rel="noopener">Start a Project →</a>
       </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services">
-    <div class="services-header">
+    <div class="services-top">
       <div>
-        <p class="section-label">What We Do</p>
-        <h2 class="section-headline">Create. Make.<br>Deliver.</h2>
+        <span class="section-label">What We Do</span>
+        <h2 class="section-headline">Create.<br>Make.<br>Deliver.</h2>
       </div>
-      <p class="section-sub">Every project runs through the same three hands. No handoffs to strangers, no broken chains — one team from brief to delivery.</p>
+      <p class="services-intro">Every project runs through the same three hands. No handoffs to strangers, no broken chains — one team from brief to delivery.</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-number">01</div>
-        <h3>Creative Execution</h3>
-        <p>Original concepts or brand adaptation — we handle the creative so everything that gets made is built on the right foundation.</p>
+    <div class="services-list">
+      <div class="service-row">
+        <span class="service-row-num">01</span>
+        <h3 class="service-row-name">Creative Execution</h3>
+        <p class="service-row-desc">Original concepts or brand adaptation — we handle the creative so everything that gets made is built on the right foundation.</p>
+        <span class="service-row-arrow">→</span>
       </div>
-      <div class="service-card">
-        <div class="service-number">02</div>
-        <h3>Fabrication</h3>
-        <p>Built in-house where we can, sourced where we should — fast, cost-efficient, and quality-checked before anything leaves.</p>
+      <div class="service-row">
+        <span class="service-row-num">02</span>
+        <h3 class="service-row-name">Fabrication</h3>
+        <p class="service-row-desc">Built in-house where we can, sourced where we should — fast, cost-efficient, and quality-checked before anything leaves.</p>
+        <span class="service-row-arrow">→</span>
       </div>
-      <div class="service-card">
-        <div class="service-number">03</div>
-        <h3>Delivery & Fulfillment</h3>
-        <p>Single site or multi-outlet, we coordinate the last mile. On time, at the right place, every time.</p>
+      <div class="service-row">
+        <span class="service-row-num">03</span>
+        <h3 class="service-row-name">Delivery & Fulfillment</h3>
+        <p class="service-row-desc">Single site or multi-outlet, we coordinate the last mile. On time, at the right place, every time.</p>
+        <span class="service-row-arrow">→</span>
       </div>
     </div>
   </section>
 
+  <!-- FULL BLEED IMAGE -->
+  <div class="full-bleed">
+    <span>Campaign Image Placeholder</span>
+  </div>
+
   <!-- PROCESS -->
   <section id="process">
-    <p class="section-label">How It Works</p>
-    <h2 class="section-headline" style="color:var(--black)">Simple In.<br>Solid Out.</h2>
-    <div class="process-steps">
-      <div class="process-step">
-        <p class="process-step-num">Step 01</p>
-        <h3>One Brief</h3>
-        <p>You tell us once. Campaign details, specs, quantities, deadline — we ask the right questions upfront, lock it in, and own it from there. No need to repeat yourself.</p>
+    <div class="process-header">
+      <div>
+        <span class="section-label">How It Works</span>
+        <h2 class="section-headline" style="color:var(--black)">Simple In.<br>Solid Out.</h2>
       </div>
-      <div class="process-step">
-        <p class="process-step-num">Step 02</p>
-        <h3>One Point of Contact</h3>
-        <p>Design, production, logistics — all under one roof. You deal with us, not a chain of vendors.</p>
+      <p class="process-sub">Hand us the brief. One point of contact from start to finish — no runaround, no chasing for updates.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-row">
+        <span class="process-row-num">01</span>
+        <h3 class="process-row-title">One Brief</h3>
+        <p class="process-row-desc">You tell us once. Campaign details, specs, quantities, deadline — we ask the right questions upfront, lock it in, and own it from there. No need to repeat yourself.</p>
       </div>
-      <div class="process-step">
-        <p class="process-step-num">Step 03</p>
-        <h3>One Delivery</h3>
-        <p>Everything lands where it needs to, when it needs to. Exactly as discussed, no last-minute surprises, no chasing for updates.</p>
+      <div class="process-row">
+        <span class="process-row-num">02</span>
+        <h3 class="process-row-title">One Point of Contact</h3>
+        <p class="process-row-desc">Design, production, logistics — all under one roof. You deal with us, not a chain of vendors.</p>
+      </div>
+      <div class="process-row">
+        <span class="process-row-num">03</span>
+        <h3 class="process-row-title">One Delivery</h3>
+        <p class="process-row-desc">Everything lands where it needs to, when it needs to. Exactly as discussed, no last-minute surprises, no chasing for updates.</p>
       </div>
     </div>
   </section>
@@ -739,78 +845,83 @@
   <section id="work">
     <div class="work-header">
       <div>
-        <p class="section-label">Our Work</p>
+        <span class="section-label">Our Work</span>
         <h2 class="section-headline">Made by BSC.</h2>
       </div>
-      <a href="https://wa.me/6597313243" class="btn-secondary" target="_blank" rel="noopener">Start a Project →</a>
+      <a href="https://wa.me/6597313243" class="work-link" target="_blank" rel="noopener">Start a Project →</a>
     </div>
     <div class="work-grid">
       <div class="work-item">
-        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889117/Test_1_pzudec.jpg" alt="POS Display" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <span class="work-label">POS Display</span>
+        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889117/Test_1_pzudec.jpg" alt="POS Display" />
+        <span class="work-item-label">POS Display</span>
       </div>
       <div class="work-item">
-        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889106/test_2_tsmaw0.jpg" alt="Brand Activation" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <span class="work-label">Brand Activation</span>
+        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889106/test_2_tsmaw0.jpg" alt="Brand Activation" />
+        <span class="work-item-label">Brand Activation</span>
       </div>
       <div class="work-item">
-        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889248/Test_1.2_budooa.jpg" alt="Signage" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <span class="work-label">Signage</span>
+        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889248/Test_1.2_budooa.jpg" alt="Signage" />
+        <span class="work-item-label">Signage</span>
       </div>
       <div class="work-item">
-        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889568/test_2.1_d6kuma.jpg" alt="Merchandise" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <span class="work-label">Merchandise</span>
+        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889568/test_2.1_d6kuma.jpg" alt="Merchandise" />
+        <span class="work-item-label">Merchandise</span>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section id="about">
-    <div class="about-inner">
-      <div>
-        <p class="section-label">About BSC</p>
-        <h2 class="section-headline">Your Needs. Our Responsibility.</h2>
-        <p class="section-sub">We built BSC around one conviction: that great campaigns deserve partners who are fully invested in seeing them land. We don't just take orders — we embed ourselves in your campaign and see it through from brief to delivery.</p>
+    <div class="about-split">
+      <div class="about-img">
+        <span>Brand Image Placeholder</span>
+      </div>
+      <div class="about-content">
+        <span class="section-label">About BSC</span>
+        <h2 class="about-headline">Your Needs.<br>Our<br>Responsibility.</h2>
+        <p class="about-body">We built BSC around one conviction: that great campaigns deserve partners who are fully invested in seeing them land. We don't just take orders — we embed ourselves in your campaign and see it through from brief to delivery.</p>
         <div class="about-values">
           <div class="value-item"><span class="value-dot"></span>Tight briefs, tighter execution</div>
           <div class="value-item"><span class="value-dot"></span>Built right, not rushed</div>
           <div class="value-item"><span class="value-dot"></span>In it from start to finish</div>
         </div>
       </div>
-      <div class="about-right">
-        <p class="about-quote">
-          Every outlet. Every deadline. <em>Every time.</em>
-        </p>
-        <p class="about-quote-sub">BSC exists to be the team behind your team — reliable, invested, and always on.</p>
-      </div>
     </div>
   </section>
 
+  <!-- PULLQUOTE -->
+  <div class="pullquote-section">
+    <p class="pullquote">Every outlet. Every deadline. <em>Every time.</em></p>
+    <p class="pullquote-sub">BSC exists to be the team behind your team — reliable, invested, and always on.</p>
+  </div>
+
   <!-- CONTACT -->
   <section id="contact">
-    <div class="contact-inner">
-      <p class="section-label">Get In Touch</p>
-      <h2 class="contact-headline">
-        Ready When
-        <em>You Are.</em>
-      </h2>
-      <p class="contact-sub">Brief in hand or just an idea — drop us a message and we'll take it from there.</p>
-      <a href="https://wa.me/6597313243" class="contact-wa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        Message us on WhatsApp
-      </a>
-      <p class="contact-email">Or email us at <a href="mailto:hello@wearebsc.com">hello@wearebsc.com</a></p>
-    </div>
+    <span class="section-label contact-label">Get In Touch</span>
+    <h2 class="contact-headline">
+      Ready When
+      <em>You Are.</em>
+    </h2>
+    <p class="contact-sub">Brief in hand or just an idea — drop us a message and we'll take it from there.</p>
+    <a href="https://wa.me/6597313243" class="contact-wa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.523 5.85L.057 23.57a.5.5 0 00.611.611l5.72-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.772-.5-5.362-1.376l-.385-.217-3.994 1.023 1.023-3.994-.217-.385A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Message us on WhatsApp
+    </a>
+    <p class="contact-email">Or email us at <a href="mailto:hello@wearebsc.com">hello@wearebsc.com</a></p>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-tape"></div>
     <a href="#hero" class="footer-logo">BLACK SHIRT CO.</a>
     <p class="footer-copy">© 2026 Black Shirt Co. All rights reserved.</p>
   </footer>
 
   <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileLinks = document.querySelectorAll('.mobile-link, .mobile-menu a');
