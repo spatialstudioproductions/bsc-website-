@@ -63,40 +63,34 @@
 
     .nav-logo span { color: var(--stone); }
 
-    .nav-links {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+
+    .hamburger {
       display: flex;
-      gap: 2.5rem;
-      list-style: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      background: none;
+      border: none;
+      padding: 0;
     }
 
-    .nav-links a {
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
+    .hamburger span {
+      height: 1.5px;
+      background: var(--white);
+      display: block;
+      transition: width 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
     }
 
-    .nav-links a:hover { color: var(--white); }
+    .hamburger span:nth-child(1) { width: 28px; }
+    .hamburger span:nth-child(2) { width: 20px; }
+    .hamburger span:nth-child(3) { width: 24px; }
 
-    .nav-cta {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--stone);
-      text-decoration: none;
-      border-bottom: 1px solid var(--stone);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .nav-cta:hover { color: var(--white); border-color: var(--white); }
-
-    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-    .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; }
+    .hamburger.open span:nth-child(1) { width: 24px; transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { width: 24px; transform: translateY(-7.5px) rotate(-45deg); }
 
     /* HERO */
     #hero {
@@ -657,30 +651,74 @@
       color: rgba(255,255,255,0.18);
     }
 
-    /* MOBILE MENU */
+    /* OVERLAY MENU */
     .mobile-menu {
-      display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--black);
       z-index: 99;
+      display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      gap: 2rem;
+      padding: 0 8%;
+      gap: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
     }
 
-    .mobile-menu.open { display: flex; }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
 
     .mobile-menu a {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
-      color: var(--white);
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      color: rgba(255,255,255,0.25);
       text-decoration: none;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      transition: color 0.2s;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: color 0.2s, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease;
     }
 
-    .mobile-menu a:hover { color: var(--stone); }
+    .mobile-menu.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu.open a:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-menu.open a:nth-child(2) { transition-delay: 0.1s; }
+    .mobile-menu.open a:nth-child(3) { transition-delay: 0.15s; }
+    .mobile-menu.open a:nth-child(4) { transition-delay: 0.2s; }
+    .mobile-menu.open a:nth-child(5) { transition-delay: 0.25s; }
+
+    .mobile-menu a:hover { color: var(--white); }
+
+    .menu-footer {
+      position: absolute;
+      bottom: 3rem;
+      left: 8%;
+      right: 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.3s;
+    }
+
+    .mobile-menu.open .menu-footer { opacity: 1; }
+    .menu-footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
@@ -691,9 +729,6 @@
     }
 
     @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .hamburger { display: flex; }
 
       .service-row {
         grid-template-columns: 50px 1fr;
@@ -771,13 +806,17 @@
     </div>
   </nav>
 
-  <!-- MOBILE MENU -->
+  <!-- OVERLAY MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services" class="mobile-link">Services</a>
     <a href="#process" class="mobile-link">Process</a>
     <a href="#work" class="mobile-link">Work</a>
     <a href="#about" class="mobile-link">About</a>
-    <a href="https://wa.me/6597313243" target="_blank" rel="noopener">Talk to Us</a>
+    <a href="https://wa.me/6597313243" class="mobile-link" target="_blank" rel="noopener">Get in Touch</a>
+    <div class="menu-footer">
+      <span>Black Shirt Co.</span>
+      <a href="mailto:hello@wearebsc.com">hello@wearebsc.com</a>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -964,11 +1003,13 @@
     const mobileLinks = document.querySelectorAll('.mobile-link, .mobile-menu a');
 
     hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
       mobileMenu.classList.toggle('open');
     });
 
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
         mobileMenu.classList.remove('open');
       });
     });
