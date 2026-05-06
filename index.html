@@ -134,7 +134,7 @@
       object-fit: cover;
       object-position: center bottom;
       display: block;
-      transform-origin: 50% 100%;
+      transform-origin: 50% 50%;
       transform: scale(1);
       will-change: transform;
     }
@@ -1054,6 +1054,7 @@
     });
 
     // Hero scroll effects — 3-layer parallax
+    const heroMid        = document.querySelector('.hero-mid');
     const heroMidImg     = document.querySelector('.hero-mid img');
     const heroFgImg      = document.querySelector('.hero-fg img');
     const heroWash       = document.querySelector('.hero-wash');
@@ -1067,13 +1068,15 @@
       const wrapperH = heroWrapper.offsetHeight - window.innerHeight;
       const progress = Math.min(Math.max(scrollY / wrapperH, 0), 1);
 
-      // Layer 1 (mid): scale from contained → fills screen, shifts up
+      // Layer 1 (mid): phase 1 rise from below (0→50%), phase 2 zoom from center (50→100%)
+      const riseP = Math.min(progress / 0.5, 1);
+      const zoomP = Math.max((progress - 0.5) / 0.5, 0);
+
+      if (heroMid) {
+        heroMid.style.transform = `translateY(${(1 - riseP) * 100}vh)`;
+      }
       if (heroMidImg) {
-        const scale = progress <= 0.55
-          ? 1 + (progress / 0.55) * 0.1          // slow: 1.0 → 1.1
-          : 1.1 + ((progress - 0.55) / 0.45) * 1.4; // fast: 1.1 → 2.5
-        const rise  = progress * -60;
-        heroMidImg.style.transform = `scale(${scale}) translateY(${rise}px)`;
+        heroMidImg.style.transform = `scale(${1 + zoomP * 1.5})`;
       }
 
       // Layer 2 (fg): shifts down on scroll
