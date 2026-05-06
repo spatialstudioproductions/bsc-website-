@@ -60,7 +60,7 @@
     }
 
     .nav-logo img {
-      height: 32px;
+      height: 64px;
       width: auto;
       display: block;
     }
@@ -116,7 +116,7 @@
     .hero-bg-solid {
       position: absolute;
       inset: 0;
-      background: var(--black);
+      background: #ff6464;
       z-index: 0;
     }
 
@@ -125,7 +125,8 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
-      z-index: 1;
+      z-index: 2;
+      transform: translateY(120vh);
     }
 
     .hero-mid img {
@@ -135,7 +136,6 @@
       object-position: center bottom;
       display: block;
       transform-origin: 50% 50%;
-      transform: scale(1);
       will-change: transform;
     }
 
@@ -144,16 +144,16 @@
       position: absolute;
       inset: 0;
       background: #fdff64;
-      z-index: 4;
+      z-index: 5;
       opacity: 0;
       pointer-events: none;
     }
 
-    /* HERO LAYER 2 — foreground: parallax up/down */
+    /* HERO LAYER 2 — foreground: sits in front of mid layer */
     .hero-fg {
       position: absolute;
       inset: 0;
-      z-index: 2;
+      z-index: 3;
       pointer-events: none;
       overflow: hidden;
       display: flex;
@@ -171,7 +171,7 @@
 
     .hero-content {
       position: relative;
-      z-index: 3;
+      z-index: 6;
       will-change: opacity, transform;
     }
 
@@ -180,7 +180,7 @@
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--stone);
+      color: rgba(28,17,8,0.65);
       margin-bottom: 1.25rem;
     }
 
@@ -193,7 +193,7 @@
 
     .hero-headline em {
       font-style: normal;
-      color: var(--stone);
+      color: rgba(28,17,8,0.65);
       display: block;
     }
 
@@ -208,7 +208,7 @@
 
     .hero-sub {
       font-size: 0.92rem;
-      color: rgba(255,255,255,0.5);
+      color: rgba(28,17,8,0.6);
       max-width: 440px;
       line-height: 1.8;
       font-weight: 400;
@@ -237,7 +237,7 @@
       bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 3;
+      z-index: 6;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -889,7 +889,7 @@
     </div>
     <div class="hero-wash"></div>
     <div class="hero-fg">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 320'%3E%3Crect width='1600' height='320' fill='white'/%3E%3C/svg%3E" alt="" aria-hidden="true" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 320'%3E%3Crect width='1600' height='320' fill='%2364FFFF'/%3E%3C/svg%3E" alt="" aria-hidden="true" />
     </div>
     <div class="hero-content">
       <p class="hero-label">Black Shirt Co. — Marketing Fabrication & Fulfillment</p>
@@ -1073,16 +1073,12 @@
       const zoomP = Math.max((progress - 0.5) / 0.5, 0);
 
       if (heroMid) {
-        heroMid.style.transform = `translateY(${(1 - riseP) * 100}vh)`;
+        heroMid.style.transform = `translateY(${(1 - riseP) * 100 + 20 * (1 - zoomP)}vh)`;
       }
       if (heroMidImg) {
         heroMidImg.style.transform = `scale(${1 + zoomP * 1.5})`;
       }
 
-      // Layer 2 (fg): shifts down on scroll
-      if (heroFgImg) {
-        heroFgImg.style.transform = `translateY(${progress * 150}px)`;
-      }
 
       // Wash: #fdff64 floods in during last 20% of scroll
       if (heroWash) {
@@ -1090,7 +1086,7 @@
       }
 
       // Text: fade + float up
-      const contentFade = Math.max(0, 1 - progress * 2.5);
+      const contentFade = Math.max(0, 1 - progress * 0.9);
       if (heroContent) {
         heroContent.style.opacity = contentFade;
         heroContent.style.transform = `translateY(${progress * -40}px)`;
