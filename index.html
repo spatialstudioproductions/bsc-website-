@@ -110,57 +110,67 @@
       overflow: hidden;
     }
 
-    .hero-bg {
+    /* HERO LAYER 0 — solid colour base */
+    .hero-bg-solid {
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      z-index: 0;
+    }
+
+    /* HERO LAYER 1 — mid image: contained → fills screen */
+    .hero-mid {
       position: absolute;
       inset: 0;
       overflow: hidden;
+      z-index: 1;
     }
 
-    .hero-bg img {
+    .hero-mid img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
       transform-origin: 50% 50%;
+      transform: scale(0.55);
       will-change: transform;
     }
 
-    /* HERO FOREGROUND */
+    .hero-mid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,17,8,0.88) 0%, rgba(28,17,8,0.35) 50%, rgba(28,17,8,0.1) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* HERO LAYER 2 — foreground: parallax up/down */
     .hero-fg {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
       overflow: hidden;
       display: flex;
       align-items: flex-end;
-      justify-content: flex-end;
-      padding-right: 6%;
+      justify-content: center;
     }
 
     .hero-fg img {
       height: 78%;
       width: auto;
-      max-width: 46%;
+      max-width: 50%;
       object-fit: contain;
       display: block;
       will-change: transform;
-      transform-origin: 50% 100%;
-      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6));
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(28,17,8,0.92) 0%, rgba(28,17,8,0.4) 50%, rgba(28,17,8,0.15) 100%);
-      z-index: 1;
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55));
     }
 
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       will-change: opacity, transform;
     }
 
@@ -226,7 +236,7 @@
       bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -868,11 +878,12 @@
   <!-- HERO -->
   <div id="hero-wrapper">
   <section id="hero">
-    <div class="hero-bg">
+    <div class="hero-bg-solid"></div>
+    <div class="hero-mid">
       <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/a_90/c_crop,ar_16:9/v1777964542/26085_jwudnz.jpg" alt="Black Shirt Co." />
     </div>
     <div class="hero-fg">
-      <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1777889117/Test_1_pzudec.jpg" alt="" aria-hidden="true" />
+      <!-- foreground asset: swap src when ready -->
     </div>
     <div class="hero-content">
       <p class="hero-label">Black Shirt Co. — Marketing Fabrication & Fulfillment</p>
@@ -1036,32 +1047,35 @@
       nav.classList.toggle('scrolled', window.scrollY > 80);
     });
 
-    // Hero scroll effects
-    const heroImg = document.querySelector('.hero-bg img');
-    const heroFgImg = document.querySelector('.hero-fg img');
-    const heroContent = document.querySelector('.hero-content');
+    // Hero scroll effects — 3-layer parallax
+    const heroMidImg     = document.querySelector('.hero-mid img');
+    const heroFgImg      = document.querySelector('.hero-fg img');
+    const heroContent    = document.querySelector('.hero-content');
     const heroScrollLine = document.querySelector('.hero-scroll');
-    const heroSection = document.getElementById('hero');
-    const heroWrapper = document.getElementById('hero-wrapper');
+    const heroSection    = document.getElementById('hero');
+    const heroWrapper    = document.getElementById('hero-wrapper');
 
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
+      const scrollY  = window.scrollY;
       const wrapperH = heroWrapper.offsetHeight - window.innerHeight;
       const progress = Math.min(Math.max(scrollY / wrapperH, 0), 1);
 
-      // Background: zoom from center + rise upward
-      if (heroImg) {
-        const scale = 1 + progress * 1.6;
-        const rise = progress * -14;
-        heroImg.style.transform = `scale(${scale}) translateY(${rise}%)`;
+      // Layer 1 (mid): scale from contained → fills screen, shifts up
+      if (heroMidImg) {
+        const scale = 0.55 + progress * 0.5;
+        const rise  = progress * -60;
+        heroMidImg.style.transform = `scale(${scale}) translateY(${rise}px)`;
       }
 
-      // Foreground: subtle independent zoom
+      // Layer 2 (fg): rises up in first half, drops below in second half
       if (heroFgImg) {
-        heroFgImg.style.transform = `scale(${1 + progress * 0.15})`;
+        const fgY = progress <= 0.5
+          ? -(progress / 0.5) * 80
+          : -80 + ((progress - 0.5) / 0.5) * 200;
+        heroFgImg.style.transform = `translateY(${fgY}px)`;
       }
 
-      // Text content: fade + float up
+      // Text: fade + float up
       const contentFade = Math.max(0, 1 - progress * 2.5);
       if (heroContent) {
         heroContent.style.opacity = contentFade;
@@ -1069,7 +1083,7 @@
       }
       if (heroScrollLine) heroScrollLine.style.opacity = contentFade;
 
-      // Hero section: fade out in last 35% — image zooms into services bg
+      // Hero section: fade out in last 35% → reveals services bg beneath
       const heroOpacity = progress > 0.65
         ? Math.max(0, 1 - (progress - 0.65) / 0.35)
         : 1;
