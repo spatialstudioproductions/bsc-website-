@@ -54,14 +54,16 @@
     }
 
     .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.12em;
-      color: var(--white);
+      display: inline-flex;
+      align-items: center;
       text-decoration: none;
     }
 
-    .nav-logo span { color: var(--stone); }
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
 
     .nav-links { display: none; }
     .nav-cta { display: none; }
@@ -695,11 +697,16 @@
     }
 
     .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.2);
+      display: inline-flex;
+      align-items: center;
       text-decoration: none;
+      opacity: 0.2;
+    }
+
+    .footer-logo img {
+      height: 24px;
+      width: auto;
+      display: block;
     }
 
     .footer-copy {
@@ -849,7 +856,7 @@
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#hero" class="nav-logo">BSC<span>.</span></a>
+    <a href="#hero" class="nav-logo"><img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1778048351/BSC_Logo_New_evcuqa.png" alt="Black Shirt Co." /></a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
@@ -1037,7 +1044,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <a href="#hero" class="footer-logo">BLACK SHIRT CO.</a>
+    <a href="#hero" class="footer-logo"><img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1778048351/BSC_Logo_New_evcuqa.png" alt="Black Shirt Co." /></a>
     <p class="footer-copy">© 2026 Black Shirt Co. All rights reserved.</p>
   </footer>
 
