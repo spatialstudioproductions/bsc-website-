@@ -132,19 +132,20 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center bottom;
       display: block;
-      transform-origin: 50% 50%;
+      transform-origin: 50% 100%;
       transform: scale(1);
       will-change: transform;
     }
 
-    .hero-mid::after {
-      content: '';
+    /* HERO WASH — colour overlay for transition into page 2 */
+    .hero-wash {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(28,17,8,0.88) 0%, rgba(28,17,8,0.35) 50%, rgba(28,17,8,0.1) 100%);
-      z-index: 1;
+      background: #fdff64;
+      z-index: 4;
+      opacity: 0;
       pointer-events: none;
     }
 
@@ -274,23 +275,22 @@
 
     /* SERVICES */
     #services {
-      background: var(--black);
-      background-image: url('https://res.cloudinary.com/dnl7vphpo/image/upload/a_90/c_crop,ar_16:9/v1777964542/26085_jwudnz.jpg');
-      background-size: cover;
-      background-position: center center;
+      background: #fdff64;
       padding: 8rem 5%;
-      position: relative;
     }
 
-    #services::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(28,17,8,0.55) 0%, rgba(28,17,8,0.88) 40%);
-      z-index: 0;
-    }
-
-    #services > * { position: relative; z-index: 1; }
+    #services .section-label { color: rgba(28,17,8,0.45); }
+    #services .section-headline { color: var(--black); }
+    #services .services-intro { color: rgba(28,17,8,0.55); }
+    #services .services-list { border-top-color: rgba(28,17,8,0.12); }
+    #services .service-row { border-bottom-color: rgba(28,17,8,0.12); }
+    #services .service-row-num { color: rgba(28,17,8,0.18); }
+    #services .service-row-name { color: var(--black); }
+    #services .service-row-desc { color: rgba(28,17,8,0.55); }
+    #services .service-row-arrow { color: rgba(28,17,8,0.15); }
+    #services .service-row:hover .service-row-num,
+    #services .service-row:hover .service-row-name,
+    #services .service-row:hover .service-row-arrow { color: var(--black); }
 
     .services-top {
       display: flex;
@@ -885,8 +885,9 @@
   <section id="hero">
     <div class="hero-bg-solid"></div>
     <div class="hero-mid">
-      <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/a_90/c_crop,ar_16:9/v1777964542/26085_jwudnz.jpg" alt="Black Shirt Co." />
+      <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1778049647/Layer_0_znbsk7.png" alt="Black Shirt Co." />
     </div>
+    <div class="hero-wash"></div>
     <div class="hero-fg">
       <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 320'%3E%3Crect width='1600' height='320' fill='white'/%3E%3C/svg%3E" alt="" aria-hidden="true" />
     </div>
@@ -1055,6 +1056,7 @@
     // Hero scroll effects — 3-layer parallax
     const heroMidImg     = document.querySelector('.hero-mid img');
     const heroFgImg      = document.querySelector('.hero-fg img');
+    const heroWash       = document.querySelector('.hero-wash');
     const heroContent    = document.querySelector('.hero-content');
     const heroScrollLine = document.querySelector('.hero-scroll');
     const heroSection    = document.getElementById('hero');
@@ -1077,6 +1079,11 @@
       // Layer 2 (fg): shifts down on scroll
       if (heroFgImg) {
         heroFgImg.style.transform = `translateY(${progress * 150}px)`;
+      }
+
+      // Wash: #fdff64 floods in during last 20% of scroll
+      if (heroWash) {
+        heroWash.style.opacity = progress > 0.8 ? (progress - 0.8) / 0.2 : 0;
       }
 
       // Text: fade + float up
