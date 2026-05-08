@@ -1137,20 +1137,6 @@
 
     }, { passive: true });
 
-    // Services background: yellow → orange → brown
-    const servicesEl = document.getElementById('services');
-    const svcStops = [[253,255,100],[255,136,0],[106,58,0]];
-    function lerpColor(a, b, t) { return a.map((v,i) => Math.round(v + (b[i]-v)*t)); }
-
-    window.addEventListener('scroll', () => {
-      const rect   = servicesEl.getBoundingClientRect();
-      const totalH = servicesEl.offsetHeight + window.innerHeight;
-      const prog   = Math.min(Math.max((window.innerHeight - rect.top) / totalH, 0), 1);
-      const [r,g,b] = prog < 0.5
-        ? lerpColor(svcStops[0], svcStops[1], prog * 2)
-        : lerpColor(svcStops[1], svcStops[2], (prog - 0.5) * 2);
-      servicesEl.style.background = `rgb(${r},${g},${b})`;
-    }, { passive: true });
 
 
     // Services scroll sync — light up Create. / Make. / Deliver. with each row
