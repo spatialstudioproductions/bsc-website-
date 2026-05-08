@@ -292,8 +292,32 @@
     #services .service-row:hover .service-row-name,
     #services .service-row:hover .service-row-arrow { color: var(--black); }
 
+    .services-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .services-list {
+      padding-right: 2%;
+    }
+
     .services-top {
-      margin-bottom: 5rem;
+      position: sticky;
+      top: 8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #services .section-headline {
+      font-size: clamp(5rem, 9vw, 9rem);
+      margin-top: 0.5rem;
+    }
+
+    #services .services-intro {
+      font-size: 1.05rem;
     }
 
     .services-intro {
@@ -309,10 +333,10 @@
 
     .service-row {
       display: grid;
-      grid-template-columns: 70px 1fr 2fr 40px;
+      grid-template-columns: 50px 1fr 1.6fr 30px;
       align-items: center;
-      gap: 3rem;
-      padding: 3rem 0;
+      gap: 2rem;
+      padding: 2rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       transition: opacity 0.2s;
     }
@@ -323,7 +347,7 @@
 
     .service-row-num {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       letter-spacing: 0.15em;
       color: rgba(255,255,255,0.18);
       transition: color 0.3s;
@@ -331,24 +355,40 @@
 
     .service-row-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
       letter-spacing: 0.03em;
       color: var(--white);
       transition: color 0.3s;
     }
 
     .service-row-desc {
-      font-size: 0.87rem;
+      font-size: 0.78rem;
       color: rgba(255,255,255,0.4);
-      line-height: 1.75;
+      line-height: 1.7;
     }
 
     .service-row-arrow {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: rgba(255,255,255,0.12);
       transition: color 0.3s, transform 0.3s;
       text-align: right;
     }
+
+
+    /* SERVICES SCROLL SYNC */
+    .hl-word {
+      display: inline-block;
+      opacity: 0.22;
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hl-word.is-active { opacity: 1; }
+
+    .service-row {
+      opacity: 0.22;
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.7s ease;
+    }
+    .service-row.is-active { opacity: 1; }
 
     /* FULL BLEED */
     .full-bleed {
@@ -788,6 +828,9 @@
 
     @media (max-width: 900px) {
 
+      .services-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .services-top { position: static; }
+
       .service-row {
         grid-template-columns: 50px 1fr;
         gap: 1.5rem;
@@ -907,10 +950,11 @@
 
   <!-- SERVICES -->
   <section id="services">
+    <div class="services-layout">
     <div class="services-top">
       <div data-animate>
         <span class="section-label">What We Do</span>
-        <h2 class="section-headline">Create.<br>Make.<br>Deliver.</h2>
+        <h2 class="section-headline"><span class="hl-word" data-step="0">Create.</span><br><span class="hl-word" data-step="1">Make.</span><br><span class="hl-word" data-step="2">Deliver.</span></h2>
         <p class="services-intro">Every project runs through the same three hands. No handoffs to strangers, no broken chains. One team from brief to delivery.</p>
       </div>
     </div>
@@ -933,6 +977,7 @@
         <p class="service-row-desc">Single site or multi-outlet, we coordinate the last mile. On time, at the right place, every time.</p>
         <span class="service-row-arrow">→</span>
       </div>
+    </div>
     </div>
   </section>
 
@@ -1106,6 +1151,24 @@
         : lerpColor(svcStops[1], svcStops[2], (prog - 0.5) * 2);
       servicesEl.style.background = `rgb(${r},${g},${b})`;
     }, { passive: true });
+
+
+    // Services scroll sync — light up Create. / Make. / Deliver. with each row
+    const svcRows  = document.querySelectorAll('#services .service-row');
+    const svcWords = document.querySelectorAll('#services .hl-word');
+    function syncServices() {
+      const trigger = window.innerHeight * 0.62;
+      let active = -1;
+      svcRows.forEach((row, i) => {
+        const r = row.getBoundingClientRect();
+        if (r.top < trigger) active = i;
+      });
+      svcRows.forEach((row, i)  => row.classList.toggle('is-active', i === active));
+      svcWords.forEach((w, i)   => w.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', syncServices, { passive: true });
+    window.addEventListener('resize', syncServices);
+    syncServices();
 
     // Scroll animations
     const animatedEls = document.querySelectorAll('[data-animate]');
