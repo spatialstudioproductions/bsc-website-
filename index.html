@@ -379,12 +379,12 @@
 
     /* PROCESS */
     #process {
-      background: var(--ivory);
-      color: var(--black);
+      background: #6A3A00;
+      color: var(--white);
       padding: 8rem 5%;
     }
 
-    #process .section-label { color: rgba(0,0,0,0.35); }
+    #process .section-label { color: rgba(255,255,255,0.45); }
 
     .process-header {
       display: flex;
@@ -398,25 +398,25 @@
     .process-sub {
       max-width: 320px;
       font-size: 0.88rem;
-      color: rgba(0,0,0,0.45);
+      color: rgba(255,255,255,0.5);
       line-height: 1.85;
     }
 
-    .process-list { border-top: 1px solid rgba(0,0,0,0.1); }
+    .process-list { border-top: 1px solid rgba(255,255,255,0.1); }
 
     .process-row {
       display: grid;
       grid-template-columns: 110px 1fr 2fr;
       gap: 3rem;
       padding: 3.5rem 0;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       align-items: start;
     }
 
     .process-row-num {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(3rem, 5vw, 4.5rem);
-      color: rgba(0,0,0,0.1);
+      color: rgba(255,255,255,0.12);
       line-height: 1;
     }
 
@@ -424,13 +424,13 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(1.8rem, 2.8vw, 2.6rem);
       letter-spacing: 0.03em;
-      color: var(--black);
+      color: var(--white);
       padding-top: 0.5rem;
     }
 
     .process-row-desc {
       font-size: 0.87rem;
-      color: rgba(0,0,0,0.5);
+      color: rgba(255,255,255,0.55);
       line-height: 1.8;
       padding-top: 0.75rem;
     }
@@ -949,7 +949,7 @@
     <div class="process-header">
       <div data-animate>
         <span class="section-label">How It Works</span>
-        <h2 class="section-headline" style="color:var(--black)">Simple In.<br>Solid Out.</h2>
+        <h2 class="section-headline" style="color:var(--white)">Simple In.<br>Solid Out.</h2>
       </div>
       <p class="process-sub" data-animate data-delay="120">Hand us the brief. One point of contact from start to finish. No runaround, no chasing for updates.</p>
     </div>
@@ -1085,14 +1085,29 @@
         heroWash.style.opacity = progress > 0.8 ? (progress - 0.8) / 0.2 : 0;
       }
 
-      // Text: fade + float up
-      const contentFade = Math.max(0, 1 - progress * 0.9);
+      // Text: fade + float up — starts fading at 40% scroll, gone by 100%
+      const contentFade = Math.max(0, 1 - Math.max(0, progress - 0.4) * 1.667);
       if (heroContent) {
         heroContent.style.opacity = contentFade;
         heroContent.style.transform = `translateY(${progress * -40}px)`;
       }
       if (heroScrollLine) heroScrollLine.style.opacity = contentFade;
 
+    }, { passive: true });
+
+    // Services background: yellow → orange → brown
+    const servicesEl = document.getElementById('services');
+    const svcStops = [[253,255,100],[255,136,0],[106,58,0]];
+    function lerpColor(a, b, t) { return a.map((v,i) => Math.round(v + (b[i]-v)*t)); }
+
+    window.addEventListener('scroll', () => {
+      const rect   = servicesEl.getBoundingClientRect();
+      const totalH = servicesEl.offsetHeight + window.innerHeight;
+      const prog   = Math.min(Math.max((window.innerHeight - rect.top) / totalH, 0), 1);
+      const [r,g,b] = prog < 0.5
+        ? lerpColor(svcStops[0], svcStops[1], prog * 2)
+        : lerpColor(svcStops[1], svcStops[2], (prog - 0.5) * 2);
+      servicesEl.style.background = `rgb(${r},${g},${b})`;
     }, { passive: true });
 
     // Scroll animations
