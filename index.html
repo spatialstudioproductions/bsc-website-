@@ -303,9 +303,40 @@
       padding-right: 2%;
     }
 
+    .services-closing {
+      margin-top: 6rem;
+      padding-top: 4rem;
+      border-top: 1px solid rgba(28,17,8,0.12);
+    }
+
+    .services-closing-line {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(28,17,8,0.18);
+    }
+
+    .services-closing-line.in-view {
+      color: var(--black);
+    }
+
+    .services-closing-line[data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  color 0.8s ease;
+    }
+
+    .services-closing-line[data-animate].in-view {
+      opacity: 1;
+      transform: translateY(0);
+      color: var(--black);
+    }
+
     .services-top {
-      position: sticky;
-      top: 8rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -379,16 +410,26 @@
     .hl-word {
       display: inline-block;
       opacity: 0.22;
-      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(0.92);
+      transform-origin: left center;
+      transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .hl-word.is-active { opacity: 1; }
+    .hl-word.is-active { opacity: 1; transform: scale(1); }
 
     .service-row {
       opacity: 0.22;
-      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  border-color 0.7s ease;
+      transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.9s ease;
     }
     .service-row.is-active { opacity: 1; }
+
+    .service-row-name {
+      transform: scale(0.82);
+      transform-origin: left center;
+      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .service-row.is-active .service-row-name { transform: scale(1); }
 
     /* FULL BLEED */
     .full-bleed {
@@ -829,7 +870,6 @@
     @media (max-width: 900px) {
 
       .services-layout { grid-template-columns: 1fr; gap: 3rem; }
-      .services-top { position: static; }
 
       .service-row {
         grid-template-columns: 50px 1fr;
@@ -955,7 +995,6 @@
       <div data-animate>
         <span class="section-label">What We Do</span>
         <h2 class="section-headline"><span class="hl-word" data-step="0">Create.</span><br><span class="hl-word" data-step="1">Make.</span><br><span class="hl-word" data-step="2">Deliver.</span></h2>
-        <p class="services-intro">Every project runs through the same three hands. No handoffs to strangers, no broken chains. One team from brief to delivery.</p>
       </div>
     </div>
     <div class="services-list">
@@ -978,6 +1017,11 @@
         <span class="service-row-arrow">→</span>
       </div>
     </div>
+    </div>
+    <div class="services-closing">
+      <p class="services-closing-line" data-animate data-delay="0">Every project runs through the same three hands.</p>
+      <p class="services-closing-line" data-animate data-delay="180">No handoffs to strangers, no broken chains.</p>
+      <p class="services-closing-line" data-animate data-delay="360">One team from brief to delivery.</p>
     </div>
   </section>
 
@@ -1142,8 +1186,9 @@
     // Services scroll sync — light up Create. / Make. / Deliver. with each row
     const svcRows  = document.querySelectorAll('#services .service-row');
     const svcWords = document.querySelectorAll('#services .hl-word');
+
     function syncServices() {
-      const trigger = window.innerHeight * 0.62;
+      const trigger = window.innerHeight * 0.48;
       let active = -1;
       svcRows.forEach((row, i) => {
         const r = row.getBoundingClientRect();
