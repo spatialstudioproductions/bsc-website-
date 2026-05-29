@@ -469,7 +469,7 @@
     }
 
     .photo-scroll-outer {
-      height: 400vh;
+      height: 300vh;
       position: relative;
     }
 
@@ -1108,13 +1108,6 @@
     </div>
   </section>
 
-  <!-- CLOSING STATEMENT -->
-  <section class="services-closing">
-    <p class="services-closing-line" data-animate data-delay="0">Every project runs through the same three hands.</p>
-    <p class="services-closing-line" data-animate data-delay="180">No handoffs to strangers, no broken chains.</p>
-    <p class="services-closing-line" data-animate data-delay="360">One team from brief to delivery.</p>
-  </section>
-
   <!-- CAMPAIGN PHOTO SCROLLER -->
   <div class="photo-scroll-outer">
     <div class="photo-scroll-sticky">
@@ -1139,6 +1132,13 @@
       </div>
     </div>
   </div>
+
+  <!-- CLOSING STATEMENT -->
+  <section class="services-closing">
+    <p class="services-closing-line" data-animate data-delay="0">Every project runs through the same three hands.</p>
+    <p class="services-closing-line" data-animate data-delay="180">No handoffs to strangers, no broken chains.</p>
+    <p class="services-closing-line" data-animate data-delay="360">One team from brief to delivery.</p>
+  </section>
 
   <!-- PROCESS -->
   <section id="process">
@@ -1337,9 +1337,10 @@
         const rect       = outer.getBoundingClientRect();
         const scrollable = outer.offsetHeight - window.innerHeight;
         const progress   = Math.max(0, Math.min(1, -rect.top / scrollable));
-        track.style.transform = `translateX(${-progress * (slides - 1) * 100}vw)`;
+        const mapped     = Math.min(progress / 0.85, 1);
+        track.style.transform = `translateX(${-mapped * (slides - 1) * 100}vw)`;
         if (counter) {
-          counter.textContent = String(Math.min(slides, Math.floor(progress * slides) + 1)).padStart(2, '0');
+          counter.textContent = String(Math.min(slides, Math.floor(mapped * slides) + 1)).padStart(2, '0');
         }
       }
 
