@@ -42,14 +42,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem 5%;
-      transition: background 0.4s, padding 0.4s, border-color 0.4s;
+      padding: 0.75rem 5%;
+      transition: background 0.4s, border-color 0.4s;
       border-bottom: 1px solid transparent;
     }
 
     nav.scrolled {
       background: var(--black);
-      padding: 1.25rem 5%;
       border-bottom-color: rgba(255,255,255,0.06);
     }
 
@@ -60,7 +59,7 @@
     }
 
     .nav-logo img {
-      height: 64px;
+      height: 84px;
       width: auto;
       display: block;
       transition: filter 0.4s ease;
@@ -504,12 +503,29 @@
     .photo-scroll-slide:nth-child(4) { background: #A8D5B5; }
 
     .photo-slide-label {
-      color: rgba(28,17,8,0.2);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      position: absolute;
+      bottom: 2rem;
+      left: 2.5rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       font-family: 'Space Grotesk', sans-serif;
+      color: rgba(28,17,8,0.55);
+      background: rgba(28,17,8,0.07);
+      backdrop-filter: blur(6px);
+      padding: 0.35rem 0.8rem;
+      z-index: 2;
     }
+
+    .photo-scroll-slide > svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: translateY(9%);
+    }
+
 
     .photo-scroll-slide img {
       position: absolute;
@@ -673,7 +689,7 @@
     }
 
     .about-img {
-      background: #2a1c0e;
+      background: var(--black);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -690,7 +706,7 @@
     .about-img img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       position: absolute;
       inset: 0;
     }
@@ -1113,20 +1129,156 @@
   <div class="photo-scroll-outer">
     <div class="photo-scroll-sticky">
       <div class="photo-scroll-track">
+        <!-- SLIDE 1 — Creative Execution (rose pink) -->
         <div class="photo-scroll-slide">
-          <span class="photo-slide-label">Campaign Photo 01</span>
+          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="s1-dots" width="48" height="48" patternUnits="userSpaceOnUse">
+                <circle cx="24" cy="24" r="1.2" fill="rgba(28,17,8,0.1)"/>
+              </pattern>
+            </defs>
+            <!-- dot grid -->
+            <rect width="1920" height="1080" fill="url(#s1-dots)"/>
+            <!-- large circle left -->
+            <circle cx="720" cy="540" r="400" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.12)" stroke-width="1.5"/>
+            <!-- large circle right, overlapping -->
+            <circle cx="1200" cy="540" r="400" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.12)" stroke-width="1.5"/>
+            <!-- inner accent ring left -->
+            <circle cx="720" cy="540" r="240" fill="none" stroke="rgba(28,17,8,0.08)" stroke-width="1" stroke-dasharray="10 8"/>
+            <!-- inner accent ring right -->
+            <circle cx="1200" cy="540" r="240" fill="none" stroke="rgba(28,17,8,0.08)" stroke-width="1" stroke-dasharray="10 8"/>
+            <!-- centre dot at intersection midpoint -->
+            <circle cx="960" cy="540" r="8" fill="rgba(28,17,8,0.22)"/>
+            <circle cx="960" cy="540" r="20" fill="none" stroke="rgba(28,17,8,0.15)" stroke-width="1"/>
+            <!-- horizontal rule through centre -->
+            <line x1="0" y1="540" x2="1920" y2="540" stroke="rgba(28,17,8,0.06)" stroke-width="1"/>
+            <!-- corner bracket marks -->
+            <path d="M80 80 H160 M80 80 V160" stroke="rgba(28,17,8,0.2)" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+            <path d="M1840 80 H1760 M1840 80 V160" stroke="rgba(28,17,8,0.2)" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+            <path d="M80 1000 H160 M80 1000 V920" stroke="rgba(28,17,8,0.2)" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+            <path d="M1840 1000 H1760 M1840 1000 V920" stroke="rgba(28,17,8,0.2)" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+          </svg>
+          <span class="photo-slide-label">Creative Execution</span>
         </div>
+
+        <!-- SLIDE 2 — Fabrication (warm cream) -->
         <div class="photo-scroll-slide">
-          <span class="photo-slide-label">Campaign Photo 02</span>
+          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <!-- diagonal slab 1 -->
+            <polygon points="0,1080 600,0 960,0 360,1080" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.1)" stroke-width="1"/>
+            <!-- diagonal slab 2 -->
+            <polygon points="480,1080 1080,0 1440,0 840,1080" fill="rgba(28,17,8,0.04)" stroke="rgba(28,17,8,0.08)" stroke-width="1"/>
+            <!-- diagonal slab 3 -->
+            <polygon points="960,1080 1560,0 1920,0 1920,260 1320,1080" fill="rgba(28,17,8,0.04)" stroke="rgba(28,17,8,0.08)" stroke-width="1"/>
+            <!-- bold centre diamond -->
+            <polygon points="960,180 1240,540 960,900 680,540" fill="rgba(28,17,8,0.04)" stroke="rgba(28,17,8,0.14)" stroke-width="1.5"/>
+            <!-- inner diamond -->
+            <polygon points="960,340 1100,540 960,740 820,540" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <!-- centre dot -->
+            <circle cx="960" cy="540" r="10" fill="rgba(28,17,8,0.28)"/>
+            <!-- accent slash line -->
+            <line x1="0" y1="0" x2="1920" y2="1080" stroke="rgba(28,17,8,0.05)" stroke-width="2"/>
+            <!-- corner wedges -->
+            <polygon points="0,0 200,0 0,200" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.1)" stroke-width="1"/>
+            <polygon points="1920,1080 1720,1080 1920,880" fill="rgba(28,17,8,0.05)" stroke="rgba(28,17,8,0.1)" stroke-width="1"/>
+            <!-- subtle horizontals -->
+            <line x1="0" y1="270" x2="1920" y2="270" stroke="rgba(28,17,8,0.04)" stroke-width="1"/>
+            <line x1="0" y1="810" x2="1920" y2="810" stroke="rgba(28,17,8,0.04)" stroke-width="1"/>
+          </svg>
+          <span class="photo-slide-label">Fabrication</span>
         </div>
+
+        <!-- SLIDE 3 — Signage & Installation (soft blue) -->
         <div class="photo-scroll-slide">
-          <span class="photo-slide-label">Campaign Photo 03</span>
+          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="s3-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M80 0L0 0 0 80" fill="none" stroke="rgba(28,17,8,0.06)" stroke-width="0.6"/>
+              </pattern>
+            </defs>
+            <rect width="1920" height="1080" fill="url(#s3-grid)"/>
+            <!-- radiating fan lines from centre-left origin -->
+            <line x1="240" y1="540" x2="1920" y2="0"    stroke="rgba(28,17,8,0.07)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="135"  stroke="rgba(28,17,8,0.08)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="270"  stroke="rgba(28,17,8,0.09)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="405"  stroke="rgba(28,17,8,0.1)"  stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="540"  stroke="rgba(28,17,8,0.12)" stroke-width="1.5"/>
+            <line x1="240" y1="540" x2="1920" y2="675"  stroke="rgba(28,17,8,0.1)"  stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="810"  stroke="rgba(28,17,8,0.09)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="945"  stroke="rgba(28,17,8,0.08)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="1920" y2="1080" stroke="rgba(28,17,8,0.07)" stroke-width="1"/>
+            <!-- upward/downward edge lines -->
+            <line x1="240" y1="540" x2="960" y2="0"    stroke="rgba(28,17,8,0.06)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="960" y2="1080" stroke="rgba(28,17,8,0.06)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="0" y2="200"    stroke="rgba(28,17,8,0.06)" stroke-width="1"/>
+            <line x1="240" y1="540" x2="0" y2="880"    stroke="rgba(28,17,8,0.06)" stroke-width="1"/>
+            <!-- origin circle -->
+            <circle cx="240" cy="540" r="50" fill="none" stroke="rgba(28,17,8,0.14)" stroke-width="1.5"/>
+            <circle cx="240" cy="540" r="20" fill="none" stroke="rgba(28,17,8,0.2)"  stroke-width="1"/>
+            <circle cx="240" cy="540" r="7"  fill="rgba(28,17,8,0.3)"/>
+            <!-- destination mark right edge -->
+            <circle cx="1760" cy="540" r="30" fill="none" stroke="rgba(28,17,8,0.16)" stroke-width="1.5"/>
+            <circle cx="1760" cy="540" r="8"  fill="rgba(28,17,8,0.25)"/>
+          </svg>
+          <span class="photo-slide-label">Signage & Installation</span>
         </div>
+
+        <!-- SLIDE 4 — Fulfillment (sage green) -->
         <div class="photo-scroll-slide">
-          <span class="photo-slide-label">Campaign Photo 04</span>
+          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="s4-hex" width="88" height="76" patternUnits="userSpaceOnUse">
+                <polygon points="44,2 82,22 82,62 44,82 6,62 6,22" fill="none" stroke="rgba(28,17,8,0.07)" stroke-width="0.8"/>
+              </pattern>
+            </defs>
+            <rect width="1920" height="1080" fill="url(#s4-hex)"/>
+            <!-- 4×3 node grid with connecting lines -->
+            <!-- Row 1: y=270 | Row 2: y=540 | Row 3: y=810 -->
+            <!-- Col: x=480, 800, 1120, 1440 -->
+            <!-- Horizontal connectors -->
+            <line x1="480" y1="270"  x2="800"  y2="270"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="800" y1="270"  x2="1120" y2="270"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1120" y1="270" x2="1440" y2="270"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="480" y1="540"  x2="800"  y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="800" y1="540"  x2="1120" y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1120" y1="540" x2="1440" y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="480" y1="810"  x2="800"  y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="800" y1="810"  x2="1120" y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1120" y1="810" x2="1440" y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <!-- Vertical connectors -->
+            <line x1="480"  y1="270" x2="480"  y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="480"  y1="540" x2="480"  y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="800"  y1="270" x2="800"  y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="800"  y1="540" x2="800"  y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1120" y1="270" x2="1120" y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1120" y1="540" x2="1120" y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1440" y1="270" x2="1440" y2="540"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <line x1="1440" y1="540" x2="1440" y2="810"  stroke="rgba(28,17,8,0.14)" stroke-width="1"/>
+            <!-- Diagonal connectors (cross-links) -->
+            <line x1="480" y1="270" x2="800"  y2="540"  stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <line x1="800" y1="270" x2="1120" y2="540"  stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <line x1="800" y1="540" x2="480"  y2="810"  stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <line x1="1120" y1="540" x2="800" y2="810"  stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <line x1="1120" y1="270" x2="1440" y2="540" stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <line x1="1440" y1="540" x2="1120" y2="810" stroke="rgba(28,17,8,0.06)" stroke-width="0.8"/>
+            <!-- Nodes -->
+            <circle cx="480"  cy="270" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="800"  cy="270" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="1120" cy="270" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="1440" cy="270" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="480"  cy="540" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="800"  cy="540" r="14" fill="rgba(28,17,8,0.28)" stroke="rgba(28,17,8,0.3)" stroke-width="1.5"/>
+            <circle cx="1120" cy="540" r="14" fill="rgba(28,17,8,0.28)" stroke="rgba(28,17,8,0.3)" stroke-width="1.5"/>
+            <circle cx="1440" cy="540" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="480"  cy="810" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="800"  cy="810" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="1120" cy="810" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+            <circle cx="1440" cy="810" r="9" fill="rgba(28,17,8,0.18)" stroke="rgba(28,17,8,0.22)" stroke-width="1"/>
+          </svg>
+          <span class="photo-slide-label">Fulfillment</span>
         </div>
       </div>
-      <div class="photo-scroll-counter">
+<div class="photo-scroll-counter">
         <span class="photo-scroll-current">01</span>
         <span>/</span>
         <span>04</span>
@@ -1202,7 +1354,7 @@
   <section id="about">
     <div class="about-split">
       <div class="about-img" data-animate>
-        <span>Brand Image Placeholder</span>
+        <img src="https://res.cloudinary.com/dnl7vphpo/image/upload/v1780124029/photo_2026-05-30_14-53-39_ozgdp8.jpg" alt="BSC team" />
       </div>
       <div class="about-content">
         <span class="section-label" data-animate>About BSC</span>
@@ -1338,7 +1490,7 @@
         const rect       = outer.getBoundingClientRect();
         const scrollable = outer.offsetHeight - window.innerHeight;
         const progress   = Math.max(0, Math.min(1, -rect.top / scrollable));
-        const mapped     = Math.min(progress / 0.85, 1);
+        const mapped     = Math.min(Math.max(0, (progress - 0.15) / 0.75), 1);
         track.style.transform = `translateX(${-mapped * (slides - 1) * 100}vw)`;
         if (counter) {
           counter.textContent = String(Math.min(slides, Math.floor(mapped * slides) + 1)).padStart(2, '0');
