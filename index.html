@@ -100,7 +100,7 @@
 
     /* HERO */
     #hero-wrapper {
-      height: 200vh;
+      height: 130vh;
       position: relative;
     }
 
@@ -282,7 +282,8 @@
     /* SERVICES */
     #services {
       background: #fdff64;
-      padding: 8rem 5% 16rem;
+      padding: 1rem 5% 16rem;
+      margin-top: -2rem;
     }
 
     #services .section-label { color: rgba(28,17,8,0.45); }
@@ -298,15 +299,12 @@
     #services .service-row:hover .service-row-name,
     #services .service-row:hover .service-row-arrow { color: var(--black); }
 
-    .services-layout {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 2rem;
-      align-items: stretch;
+    .services-header {
+      margin-bottom: 0;
     }
 
     .services-list {
-      padding-right: 2%;
+      border-top: 1px solid rgba(28,17,8,0.12);
     }
 
     .services-closing {
@@ -348,20 +346,13 @@
       color: var(--black);
     }
 
-    .services-top {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    #services .section-headline {
-      font-size: clamp(5rem, 9vw, 9rem);
-      line-height: 1.15;
-      margin-top: 0.5rem;
-    }
-
-    #services .services-intro {
-      font-size: 1.05rem;
+    .service-row-word {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 7vw, 8rem);
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--black);
+      transform-origin: left center;
     }
 
     .services-intro {
@@ -373,15 +364,14 @@
       margin-top: 1.5rem;
     }
 
-    .services-list { border-top: 1px solid rgba(255,255,255,0.08); }
 
     .service-row {
       display: grid;
-      grid-template-columns: 50px 1fr 1.6fr 30px;
+      grid-template-columns: 1.4fr 50px 1fr 1.5fr 30px;
       align-items: center;
       gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 3.5rem 0;
+      border-bottom: 1px solid rgba(28,17,8,0.12);
       transition: opacity 0.2s;
     }
 
@@ -401,8 +391,7 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(1.4rem, 2.2vw, 1.9rem);
       letter-spacing: 0.03em;
-      color: var(--white);
-      transition: color 0.3s;
+      color: var(--black);
     }
 
     .service-row-desc {
@@ -422,7 +411,7 @@
     /* SERVICES SCROLL SYNC */
     .hl-word {
       display: inline-block;
-      opacity: 0.22;
+      opacity: 0.15;
       transform: scale(0.92);
       transform-origin: left center;
       transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -431,18 +420,23 @@
     .hl-word.is-active { opacity: 1; transform: scale(1); }
 
     .service-row {
-      opacity: 0.22;
-      transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  border-color 0.5s ease;
+      transition: border-color 0.5s ease;
     }
-    .service-row.is-active { opacity: 1; }
 
-    .service-row-name {
-      transform: scale(0.82);
-      transform-origin: left center;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    .service-row-num,
+    .service-row-name,
+    .service-row-desc,
+    .service-row-arrow {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .service-row.is-active .service-row-name { transform: scale(1); }
+
+    .service-row.is-active .service-row-num  { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+    .service-row.is-active .service-row-name { opacity: 1; transform: translateY(0); transition-delay: 0.07s; }
+    .service-row.is-active .service-row-desc { opacity: 1; transform: translateY(0); transition-delay: 0.14s; }
+    .service-row.is-active .service-row-arrow { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
 
     /* FULL BLEED */
     .full-bleed {
@@ -964,13 +958,12 @@
 
     @media (max-width: 900px) {
 
-      .services-layout { grid-template-columns: 1fr; gap: 3rem; }
-
       .service-row {
-        grid-template-columns: 50px 1fr;
-        gap: 1.5rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem 1.5rem;
         padding: 2rem 0;
       }
+      .service-row-word { grid-column: 1 / -1; font-size: clamp(3rem, 10vw, 5rem); }
       .service-row-desc { grid-column: 1 / -1; padding-left: 0; }
       .service-row-arrow { display: none; }
 
@@ -1095,33 +1088,31 @@
 
   <!-- SERVICES -->
   <section id="services">
-    <div class="services-layout">
-    <div class="services-top">
-      <div data-animate>
-        <span class="section-label">What We Do</span>
-        <h2 class="section-headline"><span class="hl-word" data-step="0">Create.</span><br><span class="hl-word" data-step="1">Make.</span><br><span class="hl-word" data-step="2">Deliver.</span></h2>
-      </div>
+    <div class="services-header" data-animate>
+      <span class="section-label">What We Do</span>
     </div>
     <div class="services-list">
       <div class="service-row" data-animate data-delay="0">
+        <span class="hl-word service-row-word" data-step="0">Create.</span>
         <span class="service-row-num">01</span>
         <h3 class="service-row-name">Creative Execution</h3>
         <p class="service-row-desc">Original concepts or brand adaptation. We handle the creative so everything that gets made is built on the right foundation.</p>
         <span class="service-row-arrow">→</span>
       </div>
       <div class="service-row" data-animate data-delay="100">
+        <span class="hl-word service-row-word" data-step="1">Make.</span>
         <span class="service-row-num">02</span>
         <h3 class="service-row-name">Fabrication</h3>
         <p class="service-row-desc">Built in-house where we can, sourced where we should. Fast, cost-efficient, and quality-checked before anything leaves.</p>
         <span class="service-row-arrow">→</span>
       </div>
       <div class="service-row" data-animate data-delay="200">
+        <span class="hl-word service-row-word" data-step="2">Deliver.</span>
         <span class="service-row-num">03</span>
         <h3 class="service-row-name">Logistics & Fulfillment</h3>
         <p class="service-row-desc">Single site or multi-outlet, we coordinate the last mile. On time, at the right place, every time.</p>
         <span class="service-row-arrow">→</span>
       </div>
-    </div>
     </div>
   </section>
 
@@ -1434,6 +1425,16 @@
         heroWash.style.opacity = progress > 0.8 ? (progress - 0.8) / 0.2 : 0;
       }
 
+      // Pre-animate services content as yellow wash completes
+      if (progress >= 0.85) {
+        document.querySelectorAll('#services [data-animate]').forEach(el => {
+          if (!el.classList.contains('in-view')) {
+            const delay = parseInt(el.dataset.delay || 0);
+            setTimeout(() => el.classList.add('in-view'), delay);
+          }
+        });
+      }
+
       // Text: fade + float up — starts fading at 40% scroll, gone by 100%
       const contentFade = Math.max(0, 1 - Math.max(0, progress - 0.4) * 1.667);
       if (heroContent) {
@@ -1474,7 +1475,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
     animatedEls.forEach(el => observer.observe(el));
 
 
