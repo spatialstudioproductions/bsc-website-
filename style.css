@@ -655,23 +655,48 @@ nav.scrolled .nav-logo img {
   overflow: hidden;
   position: relative;
   background: #241810;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.work-item:nth-child(1) { grid-column: span 7; }
-.work-item:nth-child(2) { grid-column: span 5; }
-.work-item:nth-child(3) { grid-column: span 5; }
-.work-item:nth-child(4) { grid-column: span 7; }
+.work-slides {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+}
 
-.work-item img {
+.work-slides img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  aspect-ratio: 4/3;
-  transition: transform 0.7s ease;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.work-item:hover img { transform: scale(1.04); }
+.work-slides img.active { opacity: 1; }
+
+.work-item-dots {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 2;
+}
+
+.work-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: background 0.3s;
+}
+
+.work-dot.active { background: rgba(255,255,255,0.9); }
 
 .work-item-label {
   position: absolute;

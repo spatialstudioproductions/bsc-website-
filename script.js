@@ -72,7 +72,72 @@ if (svcRows.length) {
   syncServices();
 }
 
-// SCROLL ANIMATIONS — IntersectionObserver
+// WORK GRID — render from BSC_WORK data and wire hover cycling
+(function () {
+  const grid = document.getElementById('work-grid');
+  if (!grid || typeof BSC_WORK === 'undefined') return;
+
+  BSC_WORK.forEach((item, idx) => {
+    const el = document.createElement('a');
+    el.href = 'gallery.html';
+    el.className = 'work-item';
+    el.dataset.animate = '';
+    el.dataset.delay = String(idx * 80);
+    el.style.gridColumn = `span ${item.span}`;
+
+    const slidesEl = document.createElement('div');
+    slidesEl.className = 'work-slides';
+    item.photos.forEach((photo, i) => {
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.alt;
+      if (i === 0) img.classList.add('active');
+      slidesEl.appendChild(img);
+    });
+    el.appendChild(slidesEl);
+
+    const label = document.createElement('span');
+    label.className = 'work-item-label';
+    label.textContent = item.label;
+    el.appendChild(label);
+
+    if (item.photos.length > 1) {
+      const dots = document.createElement('div');
+      dots.className = 'work-item-dots';
+      item.photos.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'work-dot' + (i === 0 ? ' active' : '');
+        dots.appendChild(dot);
+      });
+      el.appendChild(dots);
+    }
+
+    grid.appendChild(el);
+  });
+
+  // Hover-to-cycle
+  grid.querySelectorAll('.work-item').forEach(item => {
+    const slides = item.querySelectorAll('.work-slides img');
+    const dots   = item.querySelectorAll('.work-dot');
+    if (slides.length <= 1) return;
+
+    let current = 0;
+    let timer   = null;
+
+    function advance() {
+      slides[current].classList.remove('active');
+      dots[current]?.classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      dots[current]?.classList.add('active');
+    }
+
+    item.addEventListener('mouseenter', () => { timer = setInterval(advance, 700); });
+    item.addEventListener('mouseleave', () => { clearInterval(timer); });
+  });
+})();
+
+// SCROLL ANIMATIONS — IntersectionObserver (runs after work grid is rendered)
 const animatedEls = document.querySelectorAll('[data-animate]');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
