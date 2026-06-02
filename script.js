@@ -18,8 +18,8 @@ if (heroWrapper) {
     const wrapperH = heroWrapper.offsetHeight - window.innerHeight;
     const progress = Math.min(Math.max(scrollY / wrapperH, 0), 1);
 
-    const riseP = Math.min(progress / 0.5, 1);
-    const zoomP = Math.max((progress - 0.5) / 0.5, 0);
+    const riseP = Math.min(progress / 0.7, 1);
+    const zoomP = Math.max((progress - 0.7) / 0.3, 0);
 
     if (heroMid) {
       heroMid.style.transform = `translateY(${(1 - riseP) * 100 + 20 * (1 - zoomP)}vh)`;
