@@ -388,7 +388,7 @@
 
     function openLightbox(item) {
       lbImages = (item.gallery || []).filter(Boolean);
-      lightboxTag.textContent   = item.category[0] || '';
+      lightboxTag.textContent   = item.category.join(' · ') || '';
       lightboxTitle.textContent = item.name;
       showSlide(0);
       lightbox.classList.add('open');
