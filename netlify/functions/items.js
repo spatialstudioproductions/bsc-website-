@@ -33,7 +33,6 @@ exports.handler = async () => {
         category:    (p.Category?.multi_select ?? []).map(o => o.name),
         brand:       p.Brand?.rich_text?.[0]?.plain_text ?? '',
         description: p.Description?.rich_text?.[0]?.plain_text ?? '',
-        imageUrl:    p['Image URL']?.url ?? '',
         gallery:     (p.Gallery?.rich_text ?? []).map(r => r.plain_text).join('\n')
                        .split('\n').map(u => u.trim()).filter(Boolean),
         featured:    p.Featured?.checkbox ?? false,

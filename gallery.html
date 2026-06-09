@@ -334,7 +334,7 @@
         const el = document.createElement('div');
         el.className = 'gallery-item';
         el.innerHTML = `
-          <img src="${item.imageUrl}" alt="${item.name}" loading="lazy" />
+          <img src="${item.gallery[0] || ''}" alt="${item.name}" loading="lazy" />
           <div class="gallery-item-overlay">
             <div class="gallery-item-meta">
               <span class="gallery-item-tag">${item.category[0] || ''}</span>
@@ -387,7 +387,7 @@
     }
 
     function openLightbox(item) {
-      lbImages = [item.imageUrl, ...(item.gallery || [])].filter(Boolean);
+      lbImages = (item.gallery || []).filter(Boolean);
       lightboxTag.textContent   = item.category[0] || '';
       lightboxTitle.textContent = item.name;
       showSlide(0);
