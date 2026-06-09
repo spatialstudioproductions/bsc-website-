@@ -485,7 +485,7 @@
     async function loadItems() {
       gridEl.innerHTML = '<div class="gallery-empty">Loading…</div>';
       try {
-        const res = await fetch('/.netlify/functions/items');
+        const res = await fetch('/items.json');
         if (!res.ok) throw new Error('Failed to load');
         allItems = await res.json();
         buildFilters(allItems);

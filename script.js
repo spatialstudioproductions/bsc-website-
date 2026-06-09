@@ -159,7 +159,7 @@ if (svcRows.length) {
     grid.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
   }
 
-  fetch('/.netlify/functions/items')
+  fetch('/items.json')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(items => { if (items.length) buildGrid(items); })
     .catch(() => {});

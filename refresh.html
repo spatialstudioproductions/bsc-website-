@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refresh Gallery — BSC</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #1c1108;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 { font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    p  { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 320px; line-height: 1.6; }
+    button {
+      background: #fdff64;
+      color: #1c1108;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .status { font-size: 0.8rem; color: rgba(255,255,255,0.4); min-height: 1.2em; }
+    .status.success { color: #7ddf9a; }
+    .status.error   { color: #ff7070; }
+  </style>
+</head>
+<body>
+  <h1>Refresh Gallery</h1>
+  <p>Press the button after updating Notion. The site will rebuild with your latest changes in about 1 minute.</p>
+  <button id="btn">Refresh Now</button>
+  <span class="status" id="status"></span>
+
+  <script>
+    const btn    = document.getElementById('btn');
+    const status = document.getElementById('status');
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      status.className = 'status';
+      status.textContent = 'Triggering deploy…';
+
+      try {
+        await fetch('https://api.netlify.com/build_hooks/6a27f2b31f315e06a94e2998', { method: 'POST' });
+        status.className = 'status success';
+        status.textContent = 'Deploy triggered — site will update in ~1 minute.';
+      } catch {
+        status.className = 'status error';
+        status.textContent = 'Something went wrong. Try again.';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
