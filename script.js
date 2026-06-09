@@ -72,69 +72,94 @@ if (svcRows.length) {
   syncServices();
 }
 
-// WORK GRID — render from BSC_WORK data and wire hover cycling
+// WORK GRID — fetch live photos from Notion gallery and render
 (function () {
   const grid = document.getElementById('work-grid');
-  if (!grid || typeof BSC_WORK === 'undefined') return;
+  if (!grid) return;
 
-  BSC_WORK.forEach((item, idx) => {
-    const el = document.createElement('a');
-    el.href = 'gallery.html';
-    el.className = 'work-item';
-    el.dataset.animate = '';
-    el.dataset.delay = String(idx * 80);
-    el.style.gridColumn = `span ${item.span}`;
+  const SPANS = [7, 5, 5, 7];
 
-    const slidesEl = document.createElement('div');
-    slidesEl.className = 'work-slides';
-    item.photos.forEach((photo, i) => {
-      const img = document.createElement('img');
-      img.src = photo.src;
-      img.alt = photo.alt;
-      if (i === 0) img.classList.add('active');
-      slidesEl.appendChild(img);
-    });
-    el.appendChild(slidesEl);
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
-    const label = document.createElement('span');
-    label.className = 'work-item-label';
-    label.textContent = item.label;
-    el.appendChild(label);
+  function buildGrid(photos) {
+    // Split shuffled photos across 4 cells as evenly as possible
+    const cells = [[], [], [], []];
+    photos.forEach((src, i) => cells[i % 4].push(src));
 
-    if (item.photos.length > 1) {
-      const dots = document.createElement('div');
-      dots.className = 'work-item-dots';
-      item.photos.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.className = 'work-dot' + (i === 0 ? ' active' : '');
-        dots.appendChild(dot);
+    SPANS.forEach((span, idx) => {
+      const cellPhotos = cells[idx];
+      if (!cellPhotos.length) return;
+
+      const el = document.createElement('a');
+      el.href = 'gallery.html';
+      el.className = 'work-item';
+      el.dataset.animate = '';
+      el.dataset.delay = String(idx * 80);
+      el.style.gridColumn = `span ${span}`;
+
+      const slidesEl = document.createElement('div');
+      slidesEl.className = 'work-slides';
+      cellPhotos.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'BSC Work';
+        if (i === 0) img.classList.add('active');
+        slidesEl.appendChild(img);
       });
-      el.appendChild(dots);
-    }
+      el.appendChild(slidesEl);
 
-    grid.appendChild(el);
-  });
+      if (cellPhotos.length > 1) {
+        const dots = document.createElement('div');
+        dots.className = 'work-item-dots';
+        cellPhotos.forEach((_, i) => {
+          const dot = document.createElement('span');
+          dot.className = 'work-dot' + (i === 0 ? ' active' : '');
+          dots.appendChild(dot);
+        });
+        el.appendChild(dots);
+      }
 
-  // Hover-to-cycle
-  grid.querySelectorAll('.work-item').forEach(item => {
-    const slides = item.querySelectorAll('.work-slides img');
-    const dots   = item.querySelectorAll('.work-dot');
-    if (slides.length <= 1) return;
+      grid.appendChild(el);
+    });
 
-    let current = 0;
-    let timer   = null;
+    // Hover-to-cycle
+    grid.querySelectorAll('.work-item').forEach(item => {
+      const slides = item.querySelectorAll('.work-slides img');
+      const dots   = item.querySelectorAll('.work-dot');
+      if (slides.length <= 1) return;
 
-    function advance() {
-      slides[current].classList.remove('active');
-      dots[current]?.classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-      dots[current]?.classList.add('active');
-    }
+      let current = 0;
+      let timer   = null;
 
-    item.addEventListener('mouseenter', () => { timer = setInterval(advance, 700); });
-    item.addEventListener('mouseleave', () => { clearInterval(timer); });
-  });
+      function advance() {
+        slides[current].classList.remove('active');
+        dots[current]?.classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+        dots[current]?.classList.add('active');
+      }
+
+      item.addEventListener('mouseenter', () => { timer = setInterval(advance, 700); });
+      item.addEventListener('mouseleave', () => { clearInterval(timer); });
+    });
+
+    // Trigger scroll animations for newly added items
+    grid.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+  }
+
+  fetch('/.netlify/functions/items')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(items => {
+      const allPhotos = shuffle(items.flatMap(item => item.gallery || []));
+      if (allPhotos.length) buildGrid(allPhotos);
+    })
+    .catch(() => {}); // fail silently — grid stays empty
 })();
 
 // SCROLL ANIMATIONS — IntersectionObserver (runs after work grid is rendered)
