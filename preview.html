@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSC Gallery Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #111; color: #fff; padding: 2rem; }
+    h1 { font-size: 1.2rem; margin-bottom: 1.5rem; color: #aaa; }
+    .entry { margin-bottom: 3rem; }
+    .entry-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: #f5c518; }
+    .photos { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .photo { position: relative; cursor: pointer; border: 3px solid transparent; border-radius: 4px; overflow: hidden; transition: border-color 0.2s; }
+    .photo:hover { border-color: #f5c518; }
+    .photo.main { border-color: #4caf50; }
+    .photo img { width: 180px; height: 120px; object-fit: cover; display: block; }
+    .photo-num { position: absolute; top: 6px; left: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+    .photo.main .photo-num { background: #4caf50; }
+    .photo-label { font-size: 0.65rem; color: #aaa; padding: 4px 6px; background: #1a1a1a; text-align: center; word-break: break-all; }
+    .instructions { background: #1e1e1e; border: 1px solid #333; padding: 1rem 1.25rem; border-radius: 6px; margin-bottom: 2rem; font-size: 0.85rem; color: #ccc; line-height: 1.6; }
+    .instructions span { color: #4caf50; font-weight: 700; }
+    .loading { color: #555; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>BSC Gallery — Photo Preview</h1>
+  <div class="instructions">
+    <span>Green border</span> = current main photo (position 1).<br>
+    Hover any photo to highlight it. Tell Claude the entry name and which number you want as main.
+  </div>
+  <div id="entries"><p class="loading">Loading entries from Notion…</p></div>
+
+  <script>
+    async function load() {
+      const el = document.getElementById('entries');
+      try {
+        const res = await fetch('/.netlify/functions/items');
+        if (!res.ok) throw new Error();
+        const items = await res.json();
+
+        if (items.length === 0) {
+          el.innerHTML = '<p class="loading">No live entries found.</p>';
+          return;
+        }
+
+        el.innerHTML = '';
+        items.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'entry';
+          div.innerHTML = `<div class="entry-title">${item.name}</div><div class="photos" id="photos-${item.id}"></div>`;
+          el.appendChild(div);
+
+          const photosEl = div.querySelector('.photos');
+          item.gallery.forEach((url, i) => {
+            const p = document.createElement('div');
+            p.className = 'photo' + (i === 0 ? ' main' : '');
+            p.innerHTML = `
+              <img src="${url}" alt="Photo ${i + 1}" loading="lazy" />
+              <span class="photo-num">${i + 1}</span>
+              <div class="photo-label">${url.split('/').pop()}</div>
+            `;
+            photosEl.appendChild(p);
+          });
+        });
+      } catch {
+        el.innerHTML = '<p class="loading">Could not load — make sure you are viewing this on the live Netlify site, not locally.</p>';
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
