@@ -43,6 +43,7 @@ exports.handler = async () => {
           }
           return urls;
         })(),
+        videoUrl:    p['Video URL']?.url ?? '',
         featured:    p.Featured?.checkbox ?? false,
       };
     });

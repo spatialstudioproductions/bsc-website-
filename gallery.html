@@ -229,6 +229,44 @@
       color: rgba(255,255,255,0.3);
     }
 
+    .lightbox-video {
+      max-width: 90vw;
+      max-height: 80vh;
+      display: none;
+      outline: none;
+    }
+
+    .lightbox-video.active {
+      display: block;
+    }
+
+    .lightbox-img.hidden {
+      display: none;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .play-icon::after {
+      content: '';
+      border-style: solid;
+      border-width: 8px 0 8px 16px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 3px;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -283,6 +321,7 @@
     <button class="lightbox-close" id="lightbox-close">×</button>
     <button class="lightbox-arrow prev" id="lightbox-prev">&#8592;</button>
     <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <video class="lightbox-video" id="lightbox-video" controls playsinline></video>
     <button class="lightbox-arrow next" id="lightbox-next">&#8594;</button>
     <div class="lightbox-caption">
       <span class="lightbox-caption-tag" id="lightbox-tag"></span>
@@ -335,6 +374,7 @@
         el.className = 'gallery-item';
         el.innerHTML = `
           <img src="${item.gallery[0] || ''}" alt="${item.name}" loading="lazy" />
+          ${item.videoUrl ? '<div class="play-icon"></div>' : ''}
           <div class="gallery-item-overlay">
             <div class="gallery-item-meta">
               <span class="gallery-item-tag">${item.category.join(' · ') || ''}</span>
@@ -369,14 +409,16 @@
     // LIGHTBOX
     const lightbox        = document.getElementById('lightbox');
     const lightboxImg     = document.getElementById('lightbox-img');
+    const lightboxVideo   = document.getElementById('lightbox-video');
     const lightboxTag     = document.getElementById('lightbox-tag');
     const lightboxTitle   = document.getElementById('lightbox-title');
     const lightboxCounter = document.getElementById('lightbox-counter');
     const lightboxPrev    = document.getElementById('lightbox-prev');
     const lightboxNext    = document.getElementById('lightbox-next');
 
-    let lbImages = [];
-    let lbIndex  = 0;
+    let lbImages  = [];
+    let lbIndex   = 0;
+    let lbVideoUrl = '';
 
     function showSlide(i) {
       lbIndex = i;
@@ -387,16 +429,35 @@
     }
 
     function openLightbox(item) {
-      lbImages = (item.gallery || []).filter(Boolean);
+      lbImages   = (item.gallery || []).filter(Boolean);
+      lbVideoUrl = item.videoUrl || '';
+
       lightboxTag.textContent   = item.category.join(' · ') || '';
       lightboxTitle.textContent = item.name;
-      showSlide(0);
+
+      if (lbVideoUrl) {
+        lightboxVideo.src = lbVideoUrl;
+        lightboxVideo.classList.add('active');
+        lightboxImg.classList.add('hidden');
+        lightboxPrev.classList.add('hidden');
+        lightboxNext.classList.add('hidden');
+        lightboxCounter.textContent = '';
+      } else {
+        lightboxVideo.pause();
+        lightboxVideo.src = '';
+        lightboxVideo.classList.remove('active');
+        lightboxImg.classList.remove('hidden');
+        showSlide(0);
+      }
+
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
       lightbox.classList.remove('open');
+      lightboxVideo.pause();
+      lightboxVideo.src = '';
       document.body.style.overflow = '';
     }
 
