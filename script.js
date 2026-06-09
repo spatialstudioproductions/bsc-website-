@@ -72,7 +72,7 @@ if (svcRows.length) {
   syncServices();
 }
 
-// WORK GRID — fetch live photos from Notion gallery and render
+// WORK GRID — fetch live Notion entries and render
 (function () {
   const grid = document.getElementById('work-grid');
   if (!grid) return;
@@ -87,14 +87,15 @@ if (svcRows.length) {
     return arr;
   }
 
-  function buildGrid(photos) {
-    // Split shuffled photos across 4 cells as evenly as possible
-    const cells = [[], [], [], []];
-    photos.forEach((src, i) => cells[i % 4].push(src));
+  function buildGrid(entries) {
+    const cells = shuffle(entries).slice(0, 4);
 
     SPANS.forEach((span, idx) => {
-      const cellPhotos = cells[idx];
-      if (!cellPhotos.length) return;
+      const entry = cells[idx];
+      if (!entry) return;
+
+      const photos = (entry.gallery || []).filter(Boolean);
+      if (!photos.length) return;
 
       const el = document.createElement('a');
       el.href = 'gallery.html';
@@ -105,19 +106,24 @@ if (svcRows.length) {
 
       const slidesEl = document.createElement('div');
       slidesEl.className = 'work-slides';
-      cellPhotos.forEach((src, i) => {
+      shuffle([...photos]).forEach((src, i) => {
         const img = document.createElement('img');
         img.src = src;
-        img.alt = 'BSC Work';
+        img.alt = entry.name;
         if (i === 0) img.classList.add('active');
         slidesEl.appendChild(img);
       });
       el.appendChild(slidesEl);
 
-      if (cellPhotos.length > 1) {
+      const label = document.createElement('span');
+      label.className = 'work-item-label';
+      label.textContent = entry.category[0] || entry.name;
+      el.appendChild(label);
+
+      if (photos.length > 1) {
         const dots = document.createElement('div');
         dots.className = 'work-item-dots';
-        cellPhotos.forEach((_, i) => {
+        photos.forEach((_, i) => {
           const dot = document.createElement('span');
           dot.className = 'work-dot' + (i === 0 ? ' active' : '');
           dots.appendChild(dot);
@@ -128,7 +134,7 @@ if (svcRows.length) {
       grid.appendChild(el);
     });
 
-    // Hover-to-cycle
+    // Hover-to-cycle at 2s interval
     grid.querySelectorAll('.work-item').forEach(item => {
       const slides = item.querySelectorAll('.work-slides img');
       const dots   = item.querySelectorAll('.work-dot');
@@ -145,7 +151,7 @@ if (svcRows.length) {
         dots[current]?.classList.add('active');
       }
 
-      item.addEventListener('mouseenter', () => { timer = setInterval(advance, 700); });
+      item.addEventListener('mouseenter', () => { timer = setInterval(advance, 2000); });
       item.addEventListener('mouseleave', () => { clearInterval(timer); });
     });
 
@@ -155,11 +161,8 @@ if (svcRows.length) {
 
   fetch('/.netlify/functions/items')
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(items => {
-      const allPhotos = shuffle(items.flatMap(item => item.gallery || []));
-      if (allPhotos.length) buildGrid(allPhotos);
-    })
-    .catch(() => {}); // fail silently — grid stays empty
+    .then(items => { if (items.length) buildGrid(items); })
+    .catch(() => {});
 })();
 
 // SCROLL ANIMATIONS — IntersectionObserver (runs after work grid is rendered)

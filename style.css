@@ -666,6 +666,9 @@ nav.scrolled .nav-logo img {
   aspect-ratio: 4/3;
 }
 
+.work-item[style*="span 7"] .work-slides { aspect-ratio: 3/2; }
+.work-item[style*="span 5"] .work-slides { aspect-ratio: 4/3; }
+
 .work-slides img {
   position: absolute;
   inset: 0;
