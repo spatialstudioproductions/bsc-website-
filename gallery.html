@@ -265,7 +265,6 @@
     <p class="footer-copy">© 2026 Black Shirt Co. All rights reserved.</p>
   </footer>
 
-  <script src="work.js"></script>
   <script>
     // NAV hamburger
     const hamburger  = document.getElementById('hamburger');
@@ -281,52 +280,50 @@
       });
     });
 
-    // BUILD FILTERS & GRID from BSC_WORK
     const filtersEl = document.getElementById('gallery-filters');
     const gridEl    = document.getElementById('gallery-grid');
+    let allItems     = [];
     let activeFilter = 'all';
 
-    // Build filter buttons from categories
-    BSC_WORK.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'filter-btn';
-      btn.dataset.filter = cat.id;
-      btn.textContent = cat.label;
-      filtersEl.appendChild(btn);
-    });
-
-    // Render grid
     function renderGallery(filter) {
       gridEl.innerHTML = '';
       const items = filter === 'all'
-        ? BSC_WORK.flatMap(cat => cat.photos.map(p => ({ ...p, category: cat.label, id: cat.id })))
-        : BSC_WORK.filter(cat => cat.id === filter).flatMap(cat => cat.photos.map(p => ({ ...p, category: cat.label, id: cat.id })));
+        ? allItems
+        : allItems.filter(item => item.category.includes(filter));
 
       if (items.length === 0) {
-        gridEl.innerHTML = '<div class="gallery-empty">No photos yet</div>';
+        gridEl.innerHTML = '<div class="gallery-empty">No photos yet — check back soon.</div>';
         return;
       }
 
       items.forEach(item => {
         const el = document.createElement('div');
         el.className = 'gallery-item';
-
         el.innerHTML = `
-          <img src="${item.src}" alt="${item.alt}" loading="lazy" />
+          <img src="${item.imageUrl}" alt="${item.name}" loading="lazy" />
           <div class="gallery-item-overlay">
             <div class="gallery-item-meta">
-              <span class="gallery-item-tag">${item.category}</span>
-              <span class="gallery-item-title">${item.alt}</span>
+              <span class="gallery-item-tag">${item.category[0] || ''}</span>
+              <span class="gallery-item-title">${item.name}</span>
             </div>
           </div>
         `;
-
         el.addEventListener('click', () => openLightbox(item));
         gridEl.appendChild(el);
       });
     }
 
-    // Filter button clicks
+    function buildFilters(items) {
+      const categories = [...new Set(items.flatMap(i => i.category))].sort();
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = cat;
+        btn.textContent = cat;
+        filtersEl.appendChild(btn);
+      });
+    }
+
     filtersEl.addEventListener('click', e => {
       const btn = e.target.closest('.filter-btn');
       if (!btn) return;
@@ -342,10 +339,10 @@
     const lightboxTitle = document.getElementById('lightbox-title');
 
     function openLightbox(item) {
-      lightboxImg.src     = item.src;
-      lightboxImg.alt     = item.alt;
-      lightboxTag.textContent   = item.category;
-      lightboxTitle.textContent = item.alt;
+      lightboxImg.src             = item.imageUrl;
+      lightboxImg.alt             = item.name;
+      lightboxTag.textContent     = item.category[0] || '';
+      lightboxTitle.textContent   = item.name;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -359,8 +356,21 @@
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-    // Initial render
-    renderGallery('all');
+    // LOAD from Netlify function
+    async function loadItems() {
+      gridEl.innerHTML = '<div class="gallery-empty">Loading…</div>';
+      try {
+        const res = await fetch('/.netlify/functions/items');
+        if (!res.ok) throw new Error('Failed to load');
+        allItems = await res.json();
+        buildFilters(allItems);
+        renderGallery('all');
+      } catch {
+        gridEl.innerHTML = '<div class="gallery-empty">Curation coming soon.</div>';
+      }
+    }
+
+    loadItems();
   </script>
 
 </body>
