@@ -337,7 +337,7 @@
           <img src="${item.gallery[0] || ''}" alt="${item.name}" loading="lazy" />
           <div class="gallery-item-overlay">
             <div class="gallery-item-meta">
-              <span class="gallery-item-tag">${item.category[0] || ''}</span>
+              <span class="gallery-item-tag">${item.category.join(' · ') || ''}</span>
               <span class="gallery-item-title">${item.name}</span>
             </div>
           </div>
