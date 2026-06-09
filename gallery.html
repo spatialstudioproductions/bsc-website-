@@ -416,40 +416,39 @@
     const lightboxPrev    = document.getElementById('lightbox-prev');
     const lightboxNext    = document.getElementById('lightbox-next');
 
-    let lbImages  = [];
-    let lbIndex   = 0;
-    let lbVideoUrl = '';
+    let lbSlides = []; // each slide: { type: 'image'|'video', src }
+    let lbIndex  = 0;
 
     function showSlide(i) {
       lbIndex = i;
-      lightboxImg.src = lbImages[i];
-      lightboxCounter.textContent = lbImages.length > 1 ? `${i + 1} / ${lbImages.length}` : '';
-      lightboxPrev.classList.toggle('hidden', i === 0);
-      lightboxNext.classList.toggle('hidden', i === lbImages.length - 1);
-    }
+      const slide = lbSlides[i];
+      const total = lbSlides.length;
 
-    function openLightbox(item) {
-      lbImages   = (item.gallery || []).filter(Boolean);
-      lbVideoUrl = item.videoUrl || '';
-
-      lightboxTag.textContent   = item.category.join(' · ') || '';
-      lightboxTitle.textContent = item.name;
-
-      if (lbVideoUrl) {
-        lightboxVideo.src = lbVideoUrl;
+      if (slide.type === 'video') {
+        lightboxVideo.src = slide.src;
         lightboxVideo.classList.add('active');
         lightboxImg.classList.add('hidden');
-        lightboxPrev.classList.add('hidden');
-        lightboxNext.classList.add('hidden');
-        lightboxCounter.textContent = '';
       } else {
         lightboxVideo.pause();
         lightboxVideo.src = '';
         lightboxVideo.classList.remove('active');
         lightboxImg.classList.remove('hidden');
-        showSlide(0);
+        lightboxImg.src = slide.src;
       }
 
+      lightboxCounter.textContent = total > 1 ? `${i + 1} / ${total}` : '';
+      lightboxPrev.classList.toggle('hidden', i === 0);
+      lightboxNext.classList.toggle('hidden', i === total - 1);
+    }
+
+    function openLightbox(item) {
+      lbSlides = [];
+      if (item.videoUrl) lbSlides.push({ type: 'video', src: item.videoUrl });
+      (item.gallery || []).filter(Boolean).forEach(url => lbSlides.push({ type: 'image', src: url }));
+
+      lightboxTag.textContent   = item.category.join(' · ') || '';
+      lightboxTitle.textContent = item.name;
+      showSlide(0);
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
