@@ -467,7 +467,7 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft'  && lbIndex > 0) showSlide(lbIndex - 1);
-      if (e.key === 'ArrowRight' && lbIndex < lbImages.length - 1) showSlide(lbIndex + 1);
+      if (e.key === 'ArrowRight' && lbIndex < lbSlides.length - 1) showSlide(lbIndex + 1);
     });
 
     // Swipe support
