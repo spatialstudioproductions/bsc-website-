@@ -33,8 +33,16 @@ exports.handler = async () => {
         category:    (p.Category?.multi_select ?? []).map(o => o.name),
         brand:       p.Brand?.rich_text?.[0]?.plain_text ?? '',
         description: p.Description?.rich_text?.[0]?.plain_text ?? '',
-        gallery:     (p.Gallery?.rich_text ?? []).map(r => r.plain_text).join('\n')
-                       .split('\n').map(u => u.trim()).filter(Boolean),
+        gallery:     (() => {
+          const urls = (p.Gallery?.rich_text ?? []).map(r => r.plain_text).join('\n')
+                         .split('\n').map(u => u.trim()).filter(Boolean);
+          const main = (p['Main Photo']?.number ?? 1) - 1;
+          if (main > 0 && main < urls.length) {
+            const [picked] = urls.splice(main, 1);
+            urls.unshift(picked);
+          }
+          return urls;
+        })(),
         featured:    p.Featured?.checkbox ?? false,
       };
     });
