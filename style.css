@@ -125,7 +125,7 @@ nav.scrolled .nav-logo img {
 
 .mobile-menu a {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-size: clamp(2rem, 6vw, 4rem);
   color: rgba(255,255,255,0.25);
   text-decoration: none;
   letter-spacing: 0.04em;
