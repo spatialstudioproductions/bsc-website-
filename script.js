@@ -111,18 +111,65 @@ if (svcRows.length) {
     const pool = shuffle(entries).filter(e => (e.gallery || []).filter(Boolean).length > 0);
     if (!pool.length) return;
 
-    // Fill track, then duplicate for seamless loop
     pool.forEach(entry => {
       const card = makeCard(entry);
       if (card) track.appendChild(card);
     });
 
-    // Clone the whole set so the loop is seamless
+    // Duplicate for seamless loop
     [...track.children].forEach(child => track.appendChild(child.cloneNode(true)));
 
-    // Pause on hover
-    marquee.addEventListener('mouseenter', () => marquee.style.setProperty('--marquee-play', 'paused'));
-    marquee.addEventListener('mouseleave', () => marquee.style.setProperty('--marquee-play', 'running'));
+    requestAnimationFrame(() => {
+      const half = track.scrollWidth / 2;
+      let pos = 0;
+      const BASE_SPEED = 0.7;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartPos = 0;
+
+      function tick() {
+        if (!isDragging) pos += BASE_SPEED;
+        if (pos >= half) pos -= half;
+        if (pos < 0) pos += half;
+        track.style.transform = `translateX(-${pos}px)`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Wheel to scrub
+      marquee.addEventListener('wheel', e => {
+        e.preventDefault();
+        pos += (e.deltaX + e.deltaY) * 0.4;
+      }, { passive: false });
+
+      // Mouse drag
+      marquee.addEventListener('mousedown', e => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartPos = pos;
+        marquee.style.cursor = 'grabbing';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        pos = dragStartPos + (dragStartX - e.clientX);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        marquee.style.cursor = '';
+      });
+
+      // Touch drag
+      marquee.addEventListener('touchstart', e => {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX;
+        dragStartPos = pos;
+      }, { passive: true });
+      marquee.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        pos = dragStartPos + (dragStartX - e.touches[0].clientX);
+      }, { passive: true });
+      marquee.addEventListener('touchend', () => { isDragging = false; });
+    });
   }
 
   fetch('/.netlify/functions/items')

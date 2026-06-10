@@ -648,20 +648,15 @@ nav.scrolled .nav-logo img {
 
 .work-marquee {
   overflow: hidden;
-  --marquee-play: running;
+  cursor: grab;
+  user-select: none;
 }
 
 .work-marquee-track {
   display: flex;
   gap: 1.25rem;
   width: max-content;
-  animation: marquee-scroll 40s linear infinite;
-  animation-play-state: var(--marquee-play);
-}
-
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  will-change: transform;
 }
 
 .work-card {
