@@ -646,63 +646,45 @@ nav.scrolled .nav-logo img {
 
 .work-link:hover { color: var(--white); border-color: var(--white); }
 
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1.25rem;
+.work-marquee {
+  overflow: hidden;
+  --marquee-play: running;
 }
 
-.work-item {
-  overflow: hidden;
+.work-marquee-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+  animation-play-state: var(--marquee-play);
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.work-card {
+  flex: 0 0 auto;
+  width: 380px;
   position: relative;
-  background: #241810;
+  overflow: hidden;
   display: block;
   text-decoration: none;
-  cursor: pointer;
+  background: #241810;
 }
 
-.work-slides {
-  position: relative;
+.work-card img {
   width: 100%;
-  aspect-ratio: 4/3;
-}
-
-.work-item[style*="span 8"] .work-slides { aspect-ratio: 3/2; }
-.work-item[style*="span 4"] .work-slides { aspect-ratio: 4/3; }
-
-.work-slides img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 3/4;
   object-fit: cover;
   display: block;
-  opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: transform 0.5s ease;
 }
 
-.work-slides img.active { opacity: 1; }
+.work-card:hover img { transform: scale(1.04); }
 
-.work-item-dots {
-  position: absolute;
-  bottom: 1.25rem;
-  right: 1.25rem;
-  display: flex;
-  gap: 0.35rem;
-  z-index: 2;
-}
-
-.work-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  transition: background 0.3s;
-}
-
-.work-dot.active { background: rgba(255,255,255,0.9); }
-
-.work-item-label {
+.work-card-label {
   position: absolute;
   bottom: 1.25rem;
   left: 1.25rem;
@@ -714,6 +696,10 @@ nav.scrolled .nav-logo img {
   background: rgba(28,17,8,0.55);
   backdrop-filter: blur(6px);
   padding: 0.35rem 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .work-card { width: 260px; }
 }
 
 /* ============================================================
@@ -968,9 +954,6 @@ footer {
   .about-split { grid-template-columns: 1fr; }
   .about-img { min-height: 50vw; }
   .about-content { padding: 5rem 5%; }
-
-  .work-grid { grid-template-columns: repeat(2, 1fr); }
-  .work-item { grid-column: span 1 !important; }
 
   .hero-bottom { flex-direction: column; align-items: flex-start; }
   .full-bleed { aspect-ratio: 16/9; }

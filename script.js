@@ -72,12 +72,11 @@ if (svcRows.length) {
   syncServices();
 }
 
-// WORK GRID — fetch live Notion entries and render
+// WORK MARQUEE — fetch live Notion entries and render scrolling strip
 (function () {
-  const grid = document.getElementById('work-grid');
-  if (!grid) return;
-
-  const SPANS = [8, 4, 4, 4, 4, 8];
+  const marquee = document.getElementById('work-marquee');
+  if (!marquee) return;
+  const track = marquee.querySelector('.work-marquee-track');
 
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -87,88 +86,48 @@ if (svcRows.length) {
     return arr;
   }
 
-  function buildGrid(entries) {
-    const cells = shuffle(entries).slice(0, 6);
+  function makeCard(entry) {
+    const photos = (entry.gallery || []).filter(Boolean);
+    if (!photos.length) return null;
 
-    SPANS.forEach((span, idx) => {
-      const entry = cells[idx];
-      if (!entry) return;
+    const el = document.createElement('a');
+    el.href = 'gallery.html';
+    el.className = 'work-card';
 
-      const photos = (entry.gallery || []).filter(Boolean);
-      if (!photos.length) return;
+    const img = document.createElement('img');
+    img.src = shuffle([...photos])[0];
+    img.alt = entry.name;
+    el.appendChild(img);
 
-      const el = document.createElement('a');
-      el.href = 'gallery.html';
-      el.className = 'work-item';
-      el.dataset.animate = '';
-      el.dataset.delay = String(idx * 80);
-      el.style.gridColumn = `span ${span}`;
+    const label = document.createElement('span');
+    label.className = 'work-card-label';
+    label.textContent = entry.category[0] || entry.name;
+    el.appendChild(label);
 
-      const slidesEl = document.createElement('div');
-      slidesEl.className = 'work-slides';
-      shuffle([...photos]).forEach((src, i) => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = entry.name;
-        if (i === 0) img.classList.add('active');
-        slidesEl.appendChild(img);
-      });
-      el.appendChild(slidesEl);
-
-      const label = document.createElement('span');
-      label.className = 'work-item-label';
-      label.textContent = entry.category[0] || entry.name;
-      el.appendChild(label);
-
-      if (photos.length > 1) {
-        const dots = document.createElement('div');
-        dots.className = 'work-item-dots';
-        photos.forEach((_, i) => {
-          const dot = document.createElement('span');
-          dot.className = 'work-dot' + (i === 0 ? ' active' : '');
-          dots.appendChild(dot);
-        });
-        el.appendChild(dots);
-      }
-
-      grid.appendChild(el);
-    });
-
-    // Auto-play at 3.5s, staggered per cell, pauses on hover
-    grid.querySelectorAll('.work-item').forEach((item, cellIdx) => {
-      const slides = item.querySelectorAll('.work-slides img');
-      const dots   = item.querySelectorAll('.work-dot');
-      if (slides.length <= 1) return;
-
-      let current = 0;
-      let timer   = null;
-      let paused  = false;
-
-      function advance() {
-        if (paused) return;
-        slides[current].classList.remove('active');
-        dots[current]?.classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
-        dots[current]?.classList.add('active');
-      }
-
-      // Stagger start so cells don't all flip together
-      setTimeout(() => {
-        timer = setInterval(advance, 3500);
-      }, cellIdx * 600);
-
-      item.addEventListener('mouseenter', () => { paused = true; });
-      item.addEventListener('mouseleave', () => { paused = false; });
-    });
-
-    // Trigger scroll animations for newly added items
-    grid.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+    return el;
   }
 
-  fetch('/items.json')
+  function buildMarquee(entries) {
+    const pool = shuffle(entries).filter(e => (e.gallery || []).filter(Boolean).length > 0);
+    if (!pool.length) return;
+
+    // Fill track, then duplicate for seamless loop
+    pool.forEach(entry => {
+      const card = makeCard(entry);
+      if (card) track.appendChild(card);
+    });
+
+    // Clone the whole set so the loop is seamless
+    [...track.children].forEach(child => track.appendChild(child.cloneNode(true)));
+
+    // Pause on hover
+    marquee.addEventListener('mouseenter', () => marquee.style.setProperty('--marquee-play', 'paused'));
+    marquee.addEventListener('mouseleave', () => marquee.style.setProperty('--marquee-play', 'running'));
+  }
+
+  fetch('/.netlify/functions/items')
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(items => { if (items.length) buildGrid(items); })
+    .then(items => { if (items.length) buildMarquee(items); })
     .catch(() => {});
 })();
 
