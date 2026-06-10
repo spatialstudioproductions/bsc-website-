@@ -77,7 +77,7 @@ if (svcRows.length) {
   const grid = document.getElementById('work-grid');
   if (!grid) return;
 
-  const SPANS = [7, 5, 5, 7];
+  const SPANS = [8, 4, 4, 4, 4, 8];
 
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -88,7 +88,7 @@ if (svcRows.length) {
   }
 
   function buildGrid(entries) {
-    const cells = shuffle(entries).slice(0, 4);
+    const cells = shuffle(entries).slice(0, 6);
 
     SPANS.forEach((span, idx) => {
       const entry = cells[idx];
@@ -134,16 +134,18 @@ if (svcRows.length) {
       grid.appendChild(el);
     });
 
-    // Hover-to-cycle at 2s interval
-    grid.querySelectorAll('.work-item').forEach(item => {
+    // Auto-play at 3.5s, staggered per cell, pauses on hover
+    grid.querySelectorAll('.work-item').forEach((item, cellIdx) => {
       const slides = item.querySelectorAll('.work-slides img');
       const dots   = item.querySelectorAll('.work-dot');
       if (slides.length <= 1) return;
 
       let current = 0;
       let timer   = null;
+      let paused  = false;
 
       function advance() {
+        if (paused) return;
         slides[current].classList.remove('active');
         dots[current]?.classList.remove('active');
         current = (current + 1) % slides.length;
@@ -151,8 +153,13 @@ if (svcRows.length) {
         dots[current]?.classList.add('active');
       }
 
-      item.addEventListener('mouseenter', () => { timer = setInterval(advance, 2000); });
-      item.addEventListener('mouseleave', () => { clearInterval(timer); });
+      // Stagger start so cells don't all flip together
+      setTimeout(() => {
+        timer = setInterval(advance, 3500);
+      }, cellIdx * 600);
+
+      item.addEventListener('mouseenter', () => { paused = true; });
+      item.addEventListener('mouseleave', () => { paused = false; });
     });
 
     // Trigger scroll animations for newly added items
