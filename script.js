@@ -138,8 +138,10 @@ if (svcRows.length) {
 
       // Wheel to scrub
       marquee.addEventListener('wheel', e => {
+        const velocity = Math.abs(e.deltaY);
+        if (velocity > 40) return; // fast scroll — let page scroll through
         e.preventDefault();
-        pos += (e.deltaX + e.deltaY) * 0.4;
+        pos += (e.deltaX + e.deltaY) * 0.6;
       }, { passive: false });
 
       // Mouse drag
