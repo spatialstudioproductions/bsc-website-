@@ -1,16 +1,15 @@
-exports.handler = async () => {
-  const token = process.env.NOTION_TOKEN;
-  const dbId  = process.env.NOTION_DB_ID;
+export async function onRequestGet(context) {
+  const { NOTION_TOKEN, NOTION_DB_ID } = context.env;
 
-  if (!token || !dbId) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Missing env vars' }) };
+  if (!NOTION_TOKEN || !NOTION_DB_ID) {
+    return new Response(JSON.stringify({ error: 'Missing env vars' }), { status: 500 });
   }
 
   try {
-    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+    const res = await fetch(`https://api.notion.com/v1/databases/${NOTION_DB_ID}/query`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${NOTION_TOKEN}`,
         'Notion-Version': '2022-06-28',
         'Content-Type': 'application/json',
       },
@@ -48,15 +47,13 @@ exports.handler = async () => {
       };
     });
 
-    return {
-      statusCode: 200,
+    return new Response(JSON.stringify(items), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=60',
       },
-      body: JSON.stringify(items),
-    };
+    });
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
-};
+}
