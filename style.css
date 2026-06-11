@@ -855,24 +855,34 @@ nav.scrolled .nav-logo img {
   text-transform: uppercase;
   text-decoration: none;
   position: relative;
-  overflow: hidden;
-  transition: color 0.35s ease, border-color 0.35s ease;
+  transition: color 0.3s ease;
+}
+
+.contact-wa::before,
+.contact-wa::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--yellow);
+  pointer-events: none;
 }
 
 .contact-wa::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--yellow);
-  transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
+  border-bottom: none;
+  border-left: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.25s ease;
 }
 
-.contact-wa:hover::before { transform: translateX(0); }
-.contact-wa:hover { color: var(--black); border-color: var(--yellow); }
+.contact-wa::after {
+  border-top: none;
+  border-right: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.25s ease 0.25s;
+}
 
-.contact-wa > * { position: relative; z-index: 1; }
+.contact-wa:hover::before { clip-path: inset(0 0% 0 0); }
+.contact-wa:hover::after  { clip-path: inset(0 0 0% 0); }
 
 .contact-wa svg { width: 20px; height: 20px; }
 
