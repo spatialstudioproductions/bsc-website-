@@ -214,6 +214,43 @@ animatedEls.forEach(el => observer.observe(el));
   update();
 })();
 
+// WHATSAPP BUTTON — text scramble on hover
+(function () {
+  const el = document.querySelector('.wa-text');
+  if (!el) return;
+  const original = el.textContent;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&';
+  let frame = null;
+
+  function scramble() {
+    let iteration = 0;
+    const totalFrames = original.length * 4;
+    cancelAnimationFrame(frame);
+
+    function tick() {
+      el.textContent = original.split('').map((char, i) => {
+        if (char === ' ') return ' ';
+        if (i < Math.floor(iteration / 4)) return original[i];
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+
+      iteration++;
+      if (iteration <= totalFrames) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        el.textContent = original;
+      }
+    }
+    tick();
+  }
+
+  el.closest('.contact-wa').addEventListener('mouseenter', scramble);
+  el.closest('.contact-wa').addEventListener('mouseleave', () => {
+    cancelAnimationFrame(frame);
+    el.textContent = original;
+  });
+})();
+
 // HAMBURGER MENU
 const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
