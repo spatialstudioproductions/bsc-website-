@@ -172,7 +172,7 @@ if (svcRows.length) {
     });
   }
 
-  fetch('/items')
+  fetch('/api/items')
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(items => { if (items.length) buildMarquee(items); })
     .catch(() => {});
