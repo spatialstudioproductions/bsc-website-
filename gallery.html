@@ -123,6 +123,12 @@
       color: var(--white);
     }
 
+    .gallery-item-desc {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+
     /* EMPTY STATE */
     .gallery-empty {
       grid-column: 1 / -1;
@@ -379,6 +385,7 @@
             <div class="gallery-item-meta">
               <span class="gallery-item-tag">${item.category.join(' · ') || ''}</span>
               <span class="gallery-item-title">${item.name}</span>
+              ${item.brand ? `<span class="gallery-item-desc">${item.brand}</span>` : ''}
             </div>
           </div>
         `;
