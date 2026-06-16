@@ -15,10 +15,6 @@ export async function onRequestGet(context) {
       },
       body: JSON.stringify({
         filter: { property: 'Status', select: { equals: 'Live' } },
-        sorts: [
-          { property: 'Featured', direction: 'descending' },
-          { timestamp: 'created_time', direction: 'descending' },
-        ],
       }),
     });
 
@@ -44,8 +40,12 @@ export async function onRequestGet(context) {
         })(),
         videoUrl:    p['Video URL']?.url ?? '',
         featured:    p.Featured?.checkbox ?? false,
+        sortTime:    p.Year?.number ? new Date(p.Year.number, 0, 1).getTime() : new Date(page.created_time).getTime(),
       };
     });
+
+    items.sort((a, b) => (b.featured - a.featured) || (b.sortTime - a.sortTime));
+    items.forEach(item => delete item.sortTime);
 
     return new Response(JSON.stringify(items), {
       headers: {

@@ -21,6 +21,42 @@
       font-size: clamp(4rem, 10vw, 9rem);
       line-height: 0.88;
       text-transform: uppercase;
+      margin: 0;
+    }
+
+    .gallery-hero-line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .gallery-hero-line span {
+      display: block;
+      transform: translateY(110%);
+      opacity: 0;
+      animation: heroLineUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .gallery-hero-line:nth-child(2) span {
+      animation-delay: 0.15s;
+    }
+
+    .gallery-hero-accent {
+      color: var(--yellow);
+    }
+
+    @keyframes heroLineUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-hero-line span {
+        animation: none;
+        transform: none;
+        opacity: 1;
+      }
     }
 
     /* FILTER BAR */
@@ -311,7 +347,10 @@
   <!-- PAGE HEADER -->
   <div class="gallery-hero">
     <span class="section-label">Portfolio</span>
-    <h1 class="gallery-hero-headline">Made<br>by BSC.</h1>
+    <h1 class="gallery-hero-headline">
+      <span class="gallery-hero-line"><span>Made</span></span>
+      <span class="gallery-hero-line"><span>by <span class="gallery-hero-accent">BSC.</span></span></span>
+    </h1>
   </div>
 
   <!-- FILTER BAR -->

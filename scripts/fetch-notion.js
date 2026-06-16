@@ -12,10 +12,6 @@ if (!token || !dbId) {
 
 const payload = JSON.stringify({
   filter: { property: 'Status', select: { equals: 'Live' } },
-  sorts: [
-    { property: 'Featured', direction: 'descending' },
-    { timestamp: 'created_time', direction: 'descending' },
-  ],
 });
 
 const options = {
@@ -53,8 +49,12 @@ const req = https.request(options, res => {
         gallery:     urls,
         videoUrl:    p['Video URL']?.url ?? '',
         featured:    p.Featured?.checkbox ?? false,
+        sortTime:    p.Year?.number ? new Date(p.Year.number, 0, 1).getTime() : new Date(page.created_time).getTime(),
       };
     });
+
+    items.sort((a, b) => (b.featured - a.featured) || (b.sortTime - a.sortTime));
+    items.forEach(item => delete item.sortTime);
 
     fs.writeFileSync(path.join(__dirname, '..', 'items.json'), JSON.stringify(items, null, 2));
     console.log(`Written ${items.length} items to items.json`);
