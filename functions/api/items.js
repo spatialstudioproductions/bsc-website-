@@ -30,7 +30,7 @@ export async function onRequestGet(context) {
         id:          page.id,
         name:        p.Name?.title?.[0]?.plain_text ?? '',
         category:    (p.Category?.multi_select ?? []).map(o => o.name),
-        brand:       p.Brand?.rich_text?.[0]?.plain_text ?? '',
+        brand:       p.ITEM?.rich_text?.[0]?.plain_text ?? '',
         description: p.Description?.rich_text?.[0]?.plain_text ?? '',
         gallery:     (() => {
           const urls = (p.Gallery?.rich_text ?? []).map(r => r.plain_text).join('\n')

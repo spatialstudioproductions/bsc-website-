@@ -48,7 +48,7 @@ const req = https.request(options, res => {
         id:          page.id,
         name:        p.Name?.title?.[0]?.plain_text ?? '',
         category:    (p.Category?.multi_select ?? []).map(o => o.name),
-        brand:       p.Brand?.rich_text?.[0]?.plain_text ?? '',
+        brand:       p.ITEM?.rich_text?.[0]?.plain_text ?? '',
         description: p.Description?.rich_text?.[0]?.plain_text ?? '',
         gallery:     urls,
         videoUrl:    p['Video URL']?.url ?? '',
