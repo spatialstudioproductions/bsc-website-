@@ -619,9 +619,18 @@ nav.scrolled .nav-logo img {
    WORK
    ============================================================ */
 #work {
-  background: var(--black);
+  background: var(--stone);
   padding: 8rem 5%;
 }
+
+#work .section-label { color: rgba(28,17,8,0.45); }
+#work .section-headline { color: var(--black); }
+
+.work-link {
+  color: rgba(28,17,8,0.45) !important;
+  border-bottom-color: rgba(28,17,8,0.2) !important;
+}
+.work-link:hover { color: var(--black) !important; border-color: var(--black) !important; }
 
 .work-header {
   display: flex;
@@ -814,29 +823,30 @@ nav.scrolled .nav-logo img {
    CONTACT
    ============================================================ */
 #contact {
-  background: var(--black);
+  background: var(--yellow);
   padding: 10rem 5%;
   text-align: center;
 }
 
-.contact-label { color: var(--stone); margin-bottom: 1.5rem; }
+.contact-label { color: rgba(28,17,8,0.5); margin-bottom: 1.5rem; }
 
 .contact-headline {
   font-size: clamp(4rem, 10vw, 9rem);
   line-height: 0.88;
   text-transform: uppercase;
   margin-bottom: 2.5rem;
+  color: var(--black);
 }
 
 .contact-headline em {
   font-style: normal;
-  color: var(--stone);
+  color: rgba(28,17,8,0.45);
   display: block;
 }
 
 .contact-sub {
   font-size: 0.92rem;
-  color: rgba(255,255,255,0.38);
+  color: rgba(28,17,8,0.55);
   line-height: 1.8;
   max-width: 380px;
   margin: 0 auto 3.5rem;
@@ -846,8 +856,8 @@ nav.scrolled .nav-logo img {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  border: 1px solid rgba(255,255,255,0.18);
-  color: var(--white);
+  border: 1px solid rgba(28,17,8,0.25);
+  color: var(--black);
   padding: 1.1rem 2.5rem;
   font-weight: 600;
   font-size: 0.82rem;
@@ -863,7 +873,7 @@ nav.scrolled .nav-logo img {
   content: '';
   position: absolute;
   inset: -1px;
-  border: 1px solid var(--yellow);
+  border: 1px solid var(--black);
   pointer-events: none;
 }
 
@@ -889,17 +899,17 @@ nav.scrolled .nav-logo img {
 .contact-email {
   margin-top: 1.5rem;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.22);
+  color: rgba(28,17,8,0.4);
 }
 
 .contact-email a {
-  color: rgba(255,255,255,0.38);
+  color: rgba(28,17,8,0.55);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(28,17,8,0.2);
   transition: color 0.2s;
 }
 
-.contact-email a:hover { color: var(--white); }
+.contact-email a:hover { color: var(--black); }
 
 /* ============================================================
    FOOTER
